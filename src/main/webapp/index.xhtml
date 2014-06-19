@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>L3 Sistema</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+            <h:form>
+                    <p:growl id="growl" sticky="true" showDetail="true"/>
+                    <p:wizard flowListener="#{cadastroMB.onFlowProcess}">
+                            <p:tab id="personal" title="Cliente">
+                                    <p:panel header="Dados do Cliente" style="width: 100%">
+                                            <p:messages />                 
+                            <table style="width:100%">
+                                <tr style="width: 80%">
+                                    <td >
+                                        <label style="width: 30%" >Nome * </label>
+                                        <input type="text"  size="50" value="#{cadastroMB.cliente.nome}" />
+                                    </td>    
+                                </tr>
+                                <tr style="width: 80%">
+                                    <td>
+                                        <label style="width: 30px">Email * </label>
+                                <p:inputText style="width: 30%;" value="#{cadastroMB.cliente.email}" required="true" label="Email"/>                                
+                                </td>
+                                </tr>
+                                <tr style="width: 80%">
+                                    <td style="width: 20%" >
+                                        <label >CPF * </label>
+                                <p:inputMask mask="999.999.999-99" value="#{cadastroMB.cliente.cpf}" required="true" label="CPF" />                                                    
+                                </td>
+
+
+                                <td  align="left" style="width: 80%">
+                                    <label  >Telefone * </label>
+                                <p:inputMask  mask="(99)9999-9999" size="10" value="#{cadastroMB.cliente.telefone}" label="Telefone"/>
+                                </td> </tr>
+                                <hr noshade width="100%" />
+
+                                
+                            </table>
+                                            
+                                        </p:panel>
+                                </p:tab>
+                     
+                            <p:tab id="address" title="Obra">
+                                    <p:panel header="Address Details">
+                                            <p:messages />
+                            <h:panelGrid columns="3">
+                                                <h:panelGroup >
+                                                        <h:outputText value="Rua " />
+                                                        <p:inputText value="#{cadastroMB.endereco.rua}" />
+                                                </h:panelGroup>
+                                                <h:panelGroup>
+                                                        <h:outputText value="Bairro " />
+                                                        <p:inputText value="#{cadastroMB.endereco.cep}" />
+                                                    </h:panelGroup>
+                                <h:panelGroup>
+                                                        <h:outputText value="Numero " />
+                                                        <p:inputText value="#{cadastroMB.endereco.numero}" />
+                                </h:panelGroup> 
+                                <h:panelGroup>
+                                                        <h:outputText value="Cep " />
+                                                        <p:inputText value="#{cadastroMB.endereco.cep}" />
+                                </h:panelGroup>  
+                                <h:panelGroup>
+                                                        <h:outputText value="Cidade " />
+                                                        <p:inputText value="#{cadastroMB.endereco.cidade}" />
+                                </h:panelGroup> 
+                                <h:panelGroup>
+                                                        <h:outputText value="Estado " />
+                                                        <p:inputText value="#{cadastroMB.endereco.estado}" />
+                                </h:panelGroup> 
+                            </h:panelGrid>                
+                        </p:panel>
+                    </p:tab>
+                    
+
+                     
+                          <!--<p:tab id="confirm" title="Confirmation">
+                                    <p:panel header="Confirmation">
+                                            <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
+                                                    <h:panelGrid columns="2" columnClasses="label, value">
+                                                            <h:outputText value="Firstname: " />
+                                                            <h:outputText value="#{cadastroMB.user.firstname}" styleClass="outputLabel"/>
+                                     
+                                                            <h:outputText value="Lastname: " />
+                                                            <h:outputText value="#{cadastroMB.user.lastname}" styleClass="outputLabel"/>
+                                     
+                                                            <h:outputText value="Age: " />
+                                                            <h:outputText value="#{cadastroMB.user.age}" styleClass="outputLabel"/>
+                                                        </h:panelGrid>
+                                 
+                                                    <h:panelGrid columns="2" columnClasses="label, value">
+                                                            <h:outputText value="Street: " />
+                                                            <h:outputText value="#{cadastroMB.user.street}" styleClass="outputLabel"/>
+                                     
+                                                            <h:outputText value="Postal: " />
+                                                            <h:outputText value="#{cadastroMB.user.postalCode}" styleClass="outputLabel"/>
+                                     
+                                                            <h:outputText value="City: " />
+                                                            <h:outputText value="#{cadastroMB.user.city}" styleClass="outputLabel"/>
+                                                        </h:panelGrid>
+                                 
+                                                    <h:panelGrid columns="2" columnClasses="label, value">
+                                                            <h:outputText value="Email: " />
+                                                            <h:outputText value="#{cadastroMB.user.email}" styleClass="outputLabel"/>
+                                     
+                                                            <h:outputText value="Phone " />
+                                                            <h:outputText value="#{cadastroMB.user.phone}" styleClass="outputLabel"/>
+                                     
+                                                            <h:outputText value="Info: " />
+                                                            <h:outputText value="#{cadastroMB.user.info}" styleClass="outputLabel"/>
+                                     
+                                                            <h:outputText />
+                                                            <h:outputText />
+                                                        </h:panelGrid>
+                                                </h:panelGrid>
+                                            <p:commandButton value="Submit" actionListener="#{cadastroMB.save}" update="growl" process="@this"/>
+                                        </p:panel>
+                                </p:tab> -->
+                        </p:wizard>
+            </h:form>
+        </h:body>
+
+    </f:view>
+</html>
+
