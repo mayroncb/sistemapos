@@ -9,129 +9,253 @@
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/interface.css" />
                 <title>L3 Sistema</title>
             </f:facet>
         </h:head>
 
         <h:body>
-            <h:form>
-                    <p:growl id="growl" sticky="true" showDetail="true"/>
-                    <p:wizard flowListener="#{cadastroMB.onFlowProcess}">
-                            <p:tab id="personal" title="Cliente">
-                                    <p:panel header="Dados do Cliente" style="width: 100%">
-                                            <p:messages />                 
-                            <table style="width:100%">
-                                <tr style="width: 80%">
-                                    <td >
-                                        <label style="width: 30%" >Nome * </label>
-                                        <input type="text"  size="50" value="#{cadastroMB.cliente.nome}" />
-                                    </td>    
-                                </tr>
-                                <tr style="width: 80%">
+            <h:form id="form" class="forms">
+                <p:growl id="growl" sticky="true" showDetail="true"/>
+                <p:wizard flowListener="#{cadastroMB.onFlowProcess}">
+                    <p:tab id="pessoal" title="Cliente">
+                        <p:panel header="Dados do Cliente" style="width: 100%">
+                            <p:messages />
+                            <fieldset>
+                                <legend>Dados do Cliente</legend>
+                                <table class="corpo">
+                                    <tr class="linha">
+                                        <td class="padraoColuna-200"></td>
+                                        <td></td>
+                                        <td class="padraoColuna-100"></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="linha">
+                                        <td>
+                                    <h:outputText  value="Nome " />
+                                    </td>
                                     <td>
-                                        <label style="width: 30px">Email * </label>
-                                <p:inputText style="width: 30%;" value="#{cadastroMB.cliente.email}" required="true" label="Email"/>                                
-                                </td>
-                                </tr>
-                                <tr style="width: 80%">
-                                    <td style="width: 20%" >
-                                        <label >CPF * </label>
-                                <p:inputMask mask="999.999.999-99" value="#{cadastroMB.cliente.cpf}" required="true" label="CPF" />                                                    
-                                </td>
+                                    <p:inputText size="30" value="#{cadastroMB.cliente.nome}" />
+                                    </td>
+                                    </tr>
+                                    <tr class="linha">
+                                        <td>
+                                    <h:outputText value="Email " />
+                                    </td>
+                                    <td>
+                                    <p:inputText value="#{cadastroMB.cliente.email}" size="30"   label="Email"/>
+                                    </td>
+                                    </tr>
+                                    <tr class="linha">
+                                        <td>
+                                    <h:outputText value="CPF/CNPJ " /></td>
+                                    <td>
+                                    <p:inputMask mask="999.999.999-99" value="#{cadastroMB.cliente.cpf}"   label="CPF" /></td>
+                                    <td>
+                                    <h:outputText value="Telefone" /></td>
+                                    <td>
+                                    <p:inputMask  mask="(99)9999-9999" size="10" value="#{cadastroMB.cliente.telefone}" label="Telefone"/>
+                                    </td>
+                                    </tr>
+                                </table>
+                           
+                                <p:separator/>
+                                <legend>Endereco do Cliente</legend>
+                                <p:separator/>
+                                <table>
+                                    <tr class="linha">
+                                        <td class="padraoColuna-200"></td>
+                                        <td></td>
+                                        <td class="padraoColuna-100"></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="linha">
+                                        <td>
+                                    <h:outputLabel value="Rua"/></td>
+                                    <td>
+                                    <p:inputText value="#{cadastroMB.cliente.endereco.rua}" size="30" label="rua" />
+                                    </td>
+                                    </tr>
+                                    <tr class="linha">
+                                        <td>
+                                    <h:outputLabel value="Bairro"/></td>
+                                    <td>
+                                    <p:inputText value="#{cadastroMB.cliente.endereco.bairro}" size="30" label="rua" />
+                                    </td>
+                                    <td>
+                                    <h:outputText value="Numero "/>
+                                    </td>
+                                    <td><p:inputText size="8" value="#{cadastroMB.cliente.endereco.numero}" label="Numero" /></td>
+                                    </tr>
+                                    <tr class="linha">
+                                        <td>
+                                    <h:outputLabel value="Cidade "/></td>
+                                    <td >
+                                    <p:inputText value="#{cadastroMB.cliente.endereco.cidade}" size="30" label="Cidade" />
+                                    </td>
+                                    <td>
+                                    <h:outputText value="Cep "/>
+                                    </td>
+                                    <td><p:inputMask mask="99.999-999" size="8" value="#{cadastroMB.cliente.endereco.cep}" label="Cep" /></td>
+                                    </tr>
+                                    <tr class="linha">
+                                        <td>
+                                    <h:outputLabel value="Estado"/></td>
+                                    <td>
+                                    <p:inputText value="#{cadastroMB.cliente.endereco.estado}" size="50" label="Estado" />
+                                    </td>
+                                    </tr>
+                                </table>
+                            </fieldset>
 
-
-                                <td  align="left" style="width: 80%">
-                                    <label  >Telefone * </label>
-                                <p:inputMask  mask="(99)9999-9999" size="10" value="#{cadastroMB.cliente.telefone}" label="Telefone"/>
-                                </td> </tr>
-                                <hr noshade width="100%" />
-
-                                
-                            </table>
-                                            
-                                        </p:panel>
-                                </p:tab>
-                     
-                            <p:tab id="address" title="Obra">
-                                    <p:panel header="Address Details">
-                                            <p:messages />
-                            <h:panelGrid columns="3">
-                                                <h:panelGroup >
-                                                        <h:outputText value="Rua " />
-                                                        <p:inputText value="#{cadastroMB.endereco.rua}" />
-                                                </h:panelGroup>
-                                                <h:panelGroup>
-                                                        <h:outputText value="Bairro " />
-                                                        <p:inputText value="#{cadastroMB.endereco.cep}" />
-                                                    </h:panelGroup>
-                                <h:panelGroup>
-                                                        <h:outputText value="Numero " />
-                                                        <p:inputText value="#{cadastroMB.endereco.numero}" />
-                                </h:panelGroup> 
-                                <h:panelGroup>
-                                                        <h:outputText value="Cep " />
-                                                        <p:inputText value="#{cadastroMB.endereco.cep}" />
-                                </h:panelGroup>  
-                                <h:panelGroup>
-                                                        <h:outputText value="Cidade " />
-                                                        <p:inputText value="#{cadastroMB.endereco.cidade}" />
-                                </h:panelGroup> 
-                                <h:panelGroup>
-                                                        <h:outputText value="Estado " />
-                                                        <p:inputText value="#{cadastroMB.endereco.estado}" />
-                                </h:panelGroup> 
-                            </h:panelGrid>                
                         </p:panel>
                     </p:tab>
-                    
 
-                     
-                          <!--<p:tab id="confirm" title="Confirmation">
-                                    <p:panel header="Confirmation">
-                                            <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
-                                                    <h:panelGrid columns="2" columnClasses="label, value">
-                                                            <h:outputText value="Firstname: " />
-                                                            <h:outputText value="#{cadastroMB.user.firstname}" styleClass="outputLabel"/>
-                                     
-                                                            <h:outputText value="Lastname: " />
-                                                            <h:outputText value="#{cadastroMB.user.lastname}" styleClass="outputLabel"/>
-                                     
-                                                            <h:outputText value="Age: " />
-                                                            <h:outputText value="#{cadastroMB.user.age}" styleClass="outputLabel"/>
-                                                        </h:panelGrid>
-                                 
-                                                    <h:panelGrid columns="2" columnClasses="label, value">
-                                                            <h:outputText value="Street: " />
-                                                            <h:outputText value="#{cadastroMB.user.street}" styleClass="outputLabel"/>
-                                     
-                                                            <h:outputText value="Postal: " />
-                                                            <h:outputText value="#{cadastroMB.user.postalCode}" styleClass="outputLabel"/>
-                                     
-                                                            <h:outputText value="City: " />
-                                                            <h:outputText value="#{cadastroMB.user.city}" styleClass="outputLabel"/>
-                                                        </h:panelGrid>
-                                 
-                                                    <h:panelGrid columns="2" columnClasses="label, value">
-                                                            <h:outputText value="Email: " />
-                                                            <h:outputText value="#{cadastroMB.user.email}" styleClass="outputLabel"/>
-                                     
-                                                            <h:outputText value="Phone " />
-                                                            <h:outputText value="#{cadastroMB.user.phone}" styleClass="outputLabel"/>
-                                     
-                                                            <h:outputText value="Info: " />
-                                                            <h:outputText value="#{cadastroMB.user.info}" styleClass="outputLabel"/>
-                                     
-                                                            <h:outputText />
-                                                            <h:outputText />
-                                                        </h:panelGrid>
-                                                </h:panelGrid>
-                                            <p:commandButton value="Submit" actionListener="#{cadastroMB.save}" update="growl" process="@this"/>
-                                        </p:panel>
-                                </p:tab> -->
-                        </p:wizard>
+                    <p:tab id="obra" title="Obra">
+                        <p:panel header="Obra">
+                            <fieldset>
+                                <legend>Dados da Obra</legend>
+                                <table class="corpo">
+                                    <tr class="linha">
+                                        <td class="padraoColuna-200"></td>
+                                        <td></td>
+                                        <td class="padraoColuna-100"></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="linha">
+                                        <td>
+                                    <h:outputText  value="Frente " />
+                                    </td>
+                                    <td>
+                                    <p:spinner id="spinnerFrente" size="3" value="#{cadastroMB.frente}"  min="0" />
+                                    </td>
+
+                                    <td>
+                                    <h:outputText value="Lateral " />
+                                    </td>
+                                    <td>
+                                    <p:spinner id="spinnerLateral" size="3" value="#{cadastroMB.lateral}"  min="0" />
+                                    </td>
+
+                                    <td>
+                                    <h:outputText value="Pavimentos " /></td>
+                                    <td>
+                                    <p:spinner size="1"  min="0"  value="#{cadastroMB.pavimentos}" >
+                                        <p:ajax update="spinnerLateral, spinnerFrente, resulField" process="@all" />
+                                    </p:spinner>
+                                    </td>
+
+                                    <tr>
+                                        <td>
+                                    <h:outputText value="Total"/>
+                                    </td>
+                                    <td>
+                                    <p:inputText value="#{cadastroMB.calcM2}" id="resulField" disabled="true" size="1" /> m2</td>
+                                    </tr>
+
+
+                                    </tr>
+                                </table>
+                            </fieldset>
+                            <br/>
+                            <p:separator/>
+                            <tr class="linha">
+                                <td>
+                            <h:outputText value="Mesmo endereço do cliente? "/> 
+                            <p:selectBooleanCheckbox/> </td>
+
+                            </tr>
+                            <p:separator/>
+
+                            <fieldset>
+                                <legend>Endereco da Obra</legend>
+                                <table>
+
+                                    <tr class="linha">
+                                        <td class="padraoColuna-200"></td>
+                                        <td></td>
+                                        <td class="padraoColuna-100"></td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr class="linha">
+                                        <td>
+                                    <h:outputLabel value="Rua"/></td>
+                                    <td>
+                                    <p:inputText value="#{cadastroMB.cliente.endereco.rua}" size="30" label="rua" />
+                                    </td>
+                                    </tr>
+                                    <tr class="linha">
+                                        <td>
+                                    <h:outputLabel value="Bairro"/></td>
+                                    <td>
+                                    <p:inputText value="#{cadastroMB.cliente.endereco.bairro}" size="30" label="rua" />
+                                    </td>
+                                    <td>
+                                    <h:outputText value="Numero "/>
+                                    </td>
+                                    <td><p:inputText size="8" value="#{cadastroMB.cliente.endereco.numero}" label="Numero" /></td>
+                                    </tr>
+                                    <tr class="linha">
+                                        <td>
+                                    <h:outputLabel value="Cidade "/></td>
+                                    <td >
+                                    <p:inputText value="#{cadastroMB.cliente.endereco.cidade}" size="30" label="Cidade" />
+                                    </td>
+                                    <td>
+                                    <h:outputText value="Cep "/>
+                                    </td>
+                                    <td><p:inputMask mask="99.999-999" size="8" value="#{cadastroMB.cliente.endereco.cep}" label="Cep" /></td>
+                                    </tr>
+                                    <tr class="linha">
+                                        <td>
+                                    <h:outputLabel value="Estado"/></td>
+                                    <td>
+                                    <p:inputText value="#{cadastroMB.cliente.endereco.estado}" size="50" label="Estado" />
+                                    </td>
+                                    </tr>
+                                </table>
+                            </fieldset>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab id="servicos" title="Serviços">
+                        <p:panel header="Seleção de Serviços" style="width: 100%">
+                            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="6">
+                                <p:outputLabel for="basic" value="Projetos" />
+                                <p:selectManyCheckbox id="basic" >
+                                    <f:selectItem itemLabel="Arquitetonico" itemValue="" />
+                                    <f:selectItem itemLabel="Ambientacao" itemValue="" />
+                                    <f:selectItem itemLabel="Eletrico" itemValue="" />
+                                    <f:selectItem itemLabel="Estritural" itemValue="" />
+                                    <f:selectItem itemLabel="Hidraulico" itemValue="" />
+                                </p:selectManyCheckbox>
+                            </h:panelGrid>
+                            <p:separator style="width: 100%"/>
+                            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="4">
+                                <p:outputLabel for="serv" value="Serviços" />
+                                <p:selectManyCheckbox id="serv" >
+                                    <f:selectItem itemLabel="Avaliação" itemValue="" />
+                                    <f:selectItem itemLabel="Orçamento" itemValue="" />
+                                    <f:selectItem itemLabel="Acompanhamento" itemValue="" />
+                                    <f:selectItem itemLabel="Laudo" itemValue="" />
+                                </p:selectManyCheckbox>
+                            </h:panelGrid>
+                            <p:separator style="width: 100%"/>
+                            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="4">
+                                <p:outputLabel for="outros" value="Outros" />
+                                <p:selectManyCheckbox id="outros" >
+                                    <f:selectItem itemLabel="RT" itemValue="" />
+                                    <f:selectItem itemLabel="Consultoria" itemValue="" />
+                                    <f:selectItem itemLabel="Caixa Economica" itemValue="" />
+                                    <f:selectItem itemLabel="Banco de Brasil" itemValue="" />
+                                </p:selectManyCheckbox>
+                            </h:panelGrid>
+
+                        </p:panel>
+                    </p:tab>
+                </p:wizard>
             </h:form>
         </h:body>
-
     </f:view>
 </html>
 

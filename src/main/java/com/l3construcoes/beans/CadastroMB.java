@@ -11,20 +11,36 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.event.FlowEvent;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author paulolira
  */
 @ManagedBean(name = "cadastroMB")
-@ViewScoped
-public class CadastroMB implements Serializable{
+@SessionScoped
+public class CadastroMB implements Serializable {
 
     private boolean skip;
-    
+
     private Cliente cliente;
-    
+
     private Endereco endereco;
+
+    private Endereco enderecoObra;
+
+    private int pavimentos;
+
+    private int frente;
+
+    private int lateral;
+
+    public int getCalcM2(){
+        int result = 0;
+        result = (getLateral() * getFrente()) * getPavimentos();
+        System.err.println(result);
+        return result;
+    }
 
     public CadastroMB() {
         this.endereco = new Endereco();
@@ -55,16 +71,44 @@ public class CadastroMB implements Serializable{
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
-    
-    
+
+    public Endereco getEnderecoObra() {
+        return enderecoObra;
+    }
+
+    public void setEnderecoObra(Endereco enderecoObra) {
+        this.enderecoObra = enderecoObra;
+    }
+
+    public int getPavimentos() {
+        return pavimentos;
+    }
+
+    public void setPavimentos(int pavimentos) {
+        this.pavimentos = pavimentos;
+    }
+
+    public int getFrente() {
+        return frente;
+    }
+
+    public void setFrente(int frente) {
+        this.frente = frente;
+    }
+
+    public int getLateral() {
+        return lateral;
+    }
+
+    public void setLateral(int fundo) {
+        this.lateral = fundo;
+    }
 
     public String onFlowProcess(FlowEvent event) {
         if (skip) {
-            System.out.println("true");
             skip = false;
             return "confirm";
         } else {
-            System.out.println(event.getNewStep());
             return event.getNewStep();
         }
     }
