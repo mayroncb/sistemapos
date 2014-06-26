@@ -6,15 +6,21 @@
 
 package com.l3construcoes.entidades;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.springframework.data.annotation.Id;
 
 /**
  *
  * @author paulolira
  */
-public class Projeto {
+public class Projeto implements  Serializable{
+    
+    @Id
+    private String id;
     
     private String tipo;
     
@@ -28,7 +34,21 @@ public class Projeto {
     
     private List<Servico> servicos;
     
+    private List<Comodo> comodos;
+    
+    private Terreno terreno;
 
+    private int tamanhoTotal;
+    
+    private int qtdPavimentos;
+    
+    public Projeto() {
+        endereco = new Endereco();
+        servicos = new ArrayList<Servico>();
+        comodos = new ArrayList<Comodo>();
+        terreno = new Terreno();
+    }
+  
     public String getTipo() {
         return tipo;
     }
@@ -76,5 +96,49 @@ public class Projeto {
     public void setServicos(List<Servico> servicos) {
         this.servicos = servicos;
     }
+
+    public List<Comodo> getComodos() {
+        return comodos;
+    }
+
+    public void setComodos(List<Comodo> comodos) {
+        this.comodos = comodos;
+    }
+
+
+    public Terreno getTerreno() {
+        return terreno;
+    }
+
+    public void setTerreno(Terreno terreno) {
+        this.terreno = terreno;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getTamanhoTotal() {
+        return tamanhoTotal;
+    }
+
+    public void setTamanhoTotal(int tamanhoTotal) {
+        this.tamanhoTotal = tamanhoTotal;
+    }
+
+    public int getQtdPavimentos() {
+        return qtdPavimentos;
+    }
+
+    public void setQtdPavimentos(int qtdPavimentos) {
+        this.qtdPavimentos = qtdPavimentos;
+    }
+    
+    
+    
 
 }

@@ -11,6 +11,12 @@
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/interface.css" />
                 <title>L3 Sistema</title>
+                <script type="text/javascript">
+                    function handleDrop(event, ui) {
+                        var droppedComodo = ui.draggable;
+                        droppedComodo.fadeOut('fast');
+                    }
+                </script>
             </f:facet>
         </h:head>
 
@@ -35,7 +41,7 @@
                                     <h:outputText  value="Nome " />
                                     </td>
                                     <td>
-                                    <p:inputText size="30" value="#{cadastroMB.cliente.nome}" />
+                                    <p:inputText id="nome" requiredMessage="Campo * Nome Obrigatorio" required="true" size="30" value="#{cadastroMB.cliente.nome}" />
                                     </td>
                                     </tr>
                                     <tr class="linha">
@@ -58,7 +64,7 @@
                                     </td>
                                     </tr>
                                 </table>
-                           
+
                                 <p:separator/>
                                 <legend>Endereco do Cliente</legend>
                                 <p:separator/>
@@ -112,9 +118,9 @@
                     </p:tab>
 
                     <p:tab id="obra" title="Obra">
-                        <p:panel header="Obra">
+                        <p:panel header="Projeto">
                             <fieldset>
-                                <legend>Dados da Obra</legend>
+                                <legend>Dados do Terreno</legend>
                                 <table class="corpo">
                                     <tr class="linha">
                                         <td class="padraoColuna-200"></td>
@@ -129,14 +135,12 @@
                                     <td>
                                     <p:spinner id="spinnerFrente" size="3" value="#{cadastroMB.frente}"  min="0" />
                                     </td>
-
                                     <td>
                                     <h:outputText value="Lateral " />
                                     </td>
                                     <td>
                                     <p:spinner id="spinnerLateral" size="3" value="#{cadastroMB.lateral}"  min="0" />
                                     </td>
-
                                     <td>
                                     <h:outputText value="Pavimentos " /></td>
                                     <td>
@@ -144,7 +148,6 @@
                                         <p:ajax update="spinnerLateral, spinnerFrente, resulField" process="@all" />
                                     </p:spinner>
                                     </td>
-
                                     <tr>
                                         <td>
                                     <h:outputText value="Total"/>
@@ -152,17 +155,50 @@
                                     <td>
                                     <p:inputText value="#{cadastroMB.calcM2}" id="resulField" disabled="true" size="1" /> m2</td>
                                     </tr>
-
-
                                     </tr>
                                 </table>
                             </fieldset>
-                            <br/>
+                            <br/><p:separator/>
+                            <tr class="linha">
+                                <td>
+
+                                    <h3 style="margin-top:0">Detalhes do Projeto</h3>
+                            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                                <p:outputLabel for="padrao" value="Padrão: " />
+                                <p:selectOneRadio  immediate="true" id="padrao" value="#{cadastroMB.padraoProjeto}">
+                                    <f:selectItem itemLabel="Basico" itemValue="Basico" />
+                                    <f:selectItem itemLabel="Normal" itemValue="Normal" />
+                                    <p:ajax process="@this"/>
+                                    <p:ajax update="checkboxDT"/>
+                                </p:selectOneRadio>
+                            </h:panelGrid>
+                            </td>
+                            </tr>
+                            <p:separator/>
+                            <!-- Inicio Drag Drop Comodos -->
+                            <p:dataTable id="checkboxDT" var="comodo" value="#{cadastroMB.comodos}"  selection="#{cadastroMB.comodosSelecionados}" rowKey="#{comodo.id}" style="margin-bottom:0">
+                                <f:facet name="header">
+                                    Comodos
+                                </f:facet>
+                                <p:column selectionMode="multiple" style="width:5%;text-align:center"/>
+                                <p:column headerText="Descrição">
+                                    <h:outputText value="#{comodo.descricao}" />
+                                </p:column>
+                                <p:column headerText="Year">
+                                    <h:outputText value="#{comodo.padrao}" />
+                                </p:column>
+                                <f:facet name="footer">
+                                    <p:commandButton actionListener="#{cadastroMB.calcularAreaTotalDoProjeto()}" process="checkboxDT"  icon="ui-icon-search"  value="Salvar" />
+                                </f:facet>
+                            </p:dataTable>
+                            <!-- Fim Drag Drop Comodos -->
                             <p:separator/>
                             <tr class="linha">
                                 <td>
                             <h:outputText value="Mesmo endereço do cliente? "/> 
-                            <p:selectBooleanCheckbox/> </td>
+                            <p:selectBooleanCheckbox valueChangeListener="#{cadastroMB.copiarEnderecoCliente()}" value="#{cadastroMB.copiarEndereco}">
+                                <p:ajax process="@this"  update="ProjetoRua, projetoBairro, projetoNumero, projetoEstado, projetoCep, projetoCidade"  />
+                            </p:selectBooleanCheckbox> </td>
 
                             </tr>
                             <p:separator/>
@@ -182,67 +218,68 @@
                                         <td>
                                     <h:outputLabel value="Rua"/></td>
                                     <td>
-                                    <p:inputText value="#{cadastroMB.cliente.endereco.rua}" size="30" label="rua" />
+                                    <p:inputText id="ProjetoRua" value="#{cadastroMB.projeto.endereco.rua}" size="30" label="rua" />
                                     </td>
                                     </tr>
                                     <tr class="linha">
                                         <td>
                                     <h:outputLabel value="Bairro"/></td>
                                     <td>
-                                    <p:inputText value="#{cadastroMB.cliente.endereco.bairro}" size="30" label="rua" />
+                                    <p:inputText id="projetoBairro" value="#{cadastroMB.projeto.endereco.bairro}" size="30" label="rua" />
                                     </td>
                                     <td>
                                     <h:outputText value="Numero "/>
                                     </td>
-                                    <td><p:inputText size="8" value="#{cadastroMB.cliente.endereco.numero}" label="Numero" /></td>
+                                    <td><p:inputText id="projetoNumero" size="8" value="#{cadastroMB.projeto.endereco.numero}" label="Numero" /></td>
                                     </tr>
                                     <tr class="linha">
                                         <td>
                                     <h:outputLabel value="Cidade "/></td>
                                     <td >
-                                    <p:inputText value="#{cadastroMB.cliente.endereco.cidade}" size="30" label="Cidade" />
+                                    <p:inputText id="projetoCidade" value="#{cadastroMB.projeto.endereco.cidade}" size="30" label="Cidade" />
                                     </td>
                                     <td>
                                     <h:outputText value="Cep "/>
                                     </td>
-                                    <td><p:inputMask mask="99.999-999" size="8" value="#{cadastroMB.cliente.endereco.cep}" label="Cep" /></td>
+                                    <td><p:inputMask id="projetoCep" mask="99.999-999" size="8" value="#{cadastroMB.projeto.endereco.cep}" label="Cep" /></td>
                                     </tr>
                                     <tr class="linha">
                                         <td>
                                     <h:outputLabel value="Estado"/></td>
                                     <td>
-                                    <p:inputText value="#{cadastroMB.cliente.endereco.estado}" size="50" label="Estado" />
+                                    <p:inputText id="projetoEstado" value="#{cadastroMB.projeto.endereco.estado}" size="50" label="Estado" />
                                     </td>
                                     </tr>
                                 </table>
                             </fieldset>
                         </p:panel>
                     </p:tab>
-                    <p:tab id="servicos" title="Serviços">
+                    <p:tab id="servicos" title="Serviços" >
                         <p:panel header="Seleção de Serviços" style="width: 100%">
-                            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="6">
+                            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
                                 <p:outputLabel for="basic" value="Projetos" />
                                 <p:selectManyCheckbox id="basic" >
                                     <f:selectItem itemLabel="Arquitetonico" itemValue="" />
                                     <f:selectItem itemLabel="Ambientacao" itemValue="" />
                                     <f:selectItem itemLabel="Eletrico" itemValue="" />
-                                    <f:selectItem itemLabel="Estritural" itemValue="" />
+                                    <f:selectItem itemLabel="Estrutural" itemValue="" />
                                     <f:selectItem itemLabel="Hidraulico" itemValue="" />
                                 </p:selectManyCheckbox>
                             </h:panelGrid>
                             <p:separator style="width: 100%"/>
-                            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="4">
+                            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
                                 <p:outputLabel for="serv" value="Serviços" />
                                 <p:selectManyCheckbox id="serv" >
                                     <f:selectItem itemLabel="Avaliação" itemValue="" />
                                     <f:selectItem itemLabel="Orçamento" itemValue="" />
+                                    <f:selectItem itemLabel="Documentação" itemValue="" />
                                     <f:selectItem itemLabel="Acompanhamento" itemValue="" />
                                     <f:selectItem itemLabel="Laudo" itemValue="" />
                                 </p:selectManyCheckbox>
                             </h:panelGrid>
                             <p:separator style="width: 100%"/>
                             <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="4">
-                                <p:outputLabel for="outros" value="Outros" />
+                                <p:outputLabel for="outros" value="Diversos" />
                                 <p:selectManyCheckbox id="outros" >
                                     <f:selectItem itemLabel="RT" itemValue="" />
                                     <f:selectItem itemLabel="Consultoria" itemValue="" />
@@ -250,8 +287,8 @@
                                     <f:selectItem itemLabel="Banco de Brasil" itemValue="" />
                                 </p:selectManyCheckbox>
                             </h:panelGrid>
-
                         </p:panel>
+                        <p:commandButton actionListener="#{cadastroMB.viewConfirmationProject()}" icon="ui-icon-extlink" value="Confirmar Dados"  update="growl" process="@this"/>
                     </p:tab>
                 </p:wizard>
             </h:form>

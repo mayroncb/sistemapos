@@ -6,13 +6,14 @@
 
 package com.l3construcoes.entidades;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author paulolira
  */
-public class Cliente {
+public class Cliente implements Serializable{
     
     private String nome;
     
@@ -89,8 +90,5 @@ public class Cliente {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-    
-    
-    
-    
+
 }

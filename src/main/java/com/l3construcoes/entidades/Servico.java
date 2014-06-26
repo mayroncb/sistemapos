@@ -6,13 +6,14 @@
 
 package com.l3construcoes.entidades;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  *
  * @author paulolira
  */
-public class Servico {
+public class Servico implements  Serializable{
     
     private String codigo;
     

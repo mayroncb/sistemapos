@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+     
+    <h:head>
+        <title>Confirmar Dados</title>
+        <style type="text/css">
+            .ui-widget {
+                font-size: 90%;
+            }
+            .label{
+                font-weight: bold;
+            }
+        </style>
+    </h:head>
+     
+    <h:body>
+        <label class="label">Nome:  </label> <p:outputLabel value="#{cadastroMB.cliente.nome}" /><br/>
+        <label class="label">Email: </label><p:outputLabel value="#{cadastroMB.cliente.email}" /><br/>
+        <label class="label">CPF:   </label><p:outputLabel value="#{cadastroMB.cliente.cpf}" />
+        <label class="label">Telefone: </label><p:outputLabel value="#{cadastroMB.cliente.telefone}" />
+        <p:separator/>
+        <label class="label">Endereco do Cliente </label>
+        <p:separator/>
+        <label class="label">Rua:  </label> <p:outputLabel value="#{cadastroMB.cliente.endereco.rua}" /><br/>
+        <label class="label">Bairro:  </label> <p:outputLabel value="#{cadastroMB.cliente.endereco.bairro}" />
+        <label class="label">Numero:  </label> <p:outputLabel value="#{cadastroMB.cliente.endereco.numero}" /><br/>
+        <label class="label">Cidade:  </label> <p:outputLabel value="#{cadastroMB.cliente.endereco.cidade}" />
+        <label class="label">Estado:  </label> <p:outputLabel value="#{cadastroMB.cliente.endereco.estado}" /><br/>
+        <label class="label">Cep:  </label> <p:outputLabel value="#{cadastroMB.cliente.endereco.cep}" /><br/>
+    </h:body>
+     
+</html>

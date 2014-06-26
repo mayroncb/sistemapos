@@ -6,11 +6,13 @@
 
 package com.l3construcoes.entidades;
 
+import java.io.Serializable;
+
 /**
  *
  * @author paulolira
  */
-public class Endereco {
+public class Endereco implements  Serializable{
     
     private String rua;
     
