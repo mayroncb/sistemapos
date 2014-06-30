@@ -8,6 +8,7 @@ package com.l3construcoes.util;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
+import java.io.Serializable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDbFactory;
@@ -20,7 +21,7 @@ import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
  * @author paulolira
  */
 @Configuration
-public class SpringMongoConfig {
+public class SpringMongoConfig implements Serializable{
     
    public @Bean
 	MongoDbFactory mongoDbFactory() throws Exception {

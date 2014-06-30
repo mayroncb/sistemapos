@@ -7,12 +7,19 @@
 package com.l3construcoes.entidades;
 
 import java.io.Serializable;
+import java.util.Objects;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
  * @author paulolira
  */
+@Document(collection = "documentos")
 public class Endereco implements  Serializable{
+    
+    @Id
+    private String id;
     
     private String rua;
     
@@ -72,6 +79,40 @@ public class Endereco implements  Serializable{
 
     public void setNumero(String numero) {
         this.numero = numero;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.rua);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Endereco other = (Endereco) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.rua, other.rua)) {
+            return false;
+        }
+        return true;
     }
     
     

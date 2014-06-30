@@ -11,18 +11,12 @@
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/interface.css" />
                 <title>L3 Sistema</title>
-                <script type="text/javascript">
-                    function handleDrop(event, ui) {
-                        var droppedComodo = ui.draggable;
-                        droppedComodo.fadeOut('fast');
-                    }
-                </script>
             </f:facet>
         </h:head>
 
         <h:body>
             <h:form id="form" class="forms">
-                <p:growl id="growl" sticky="true" showDetail="true"/>
+                <p:growl id="growl"   life="2000" showDetail="true"/>
                 <p:wizard flowListener="#{cadastroMB.onFlowProcess}">
                     <p:tab id="pessoal" title="Cliente">
                         <p:panel header="Dados do Cliente" style="width: 100%">
@@ -41,7 +35,8 @@
                                     <h:outputText  value="Nome " />
                                     </td>
                                     <td>
-                                    <p:inputText id="nome" requiredMessage="Campo * Nome Obrigatorio" required="true" size="30" value="#{cadastroMB.cliente.nome}" />
+                                    <p:inputText  id="nome" requiredMessage="Campo * Nome Obrigatorio" required="true" size="30" 
+                                                 value="#{cadastroMB.cliente.nome}" />
                                     </td>
                                     </tr>
                                     <tr class="linha">
@@ -133,19 +128,24 @@
                                     <h:outputText  value="Frente " />
                                     </td>
                                     <td>
-                                    <p:spinner id="spinnerFrente" size="3" value="#{cadastroMB.frente}"  min="0" />
+                                    <p:spinner id="spinnerFrente" size="3" value="#{cadastroMB.projeto.terreno.frente}"  min="0" >
+                                        <p:ajax update="spinnerLateral, spinnerFrente, resulField" process="@this" />
+                                    </p:spinner>
                                     </td>
                                     <td>
                                     <h:outputText value="Lateral " />
                                     </td>
                                     <td>
-                                    <p:spinner id="spinnerLateral" size="3" value="#{cadastroMB.lateral}"  min="0" />
+                                    <p:spinner id="spinnerLateral" size="3" value="#{cadastroMB.projeto.terreno.lateral}"  min="0" >
+                                        <p:ajax update="spinnerLateral, spinnerFrente, resulField" process="@this" />
+                                    </p:spinner>
+                                    
                                     </td>
                                     <td>
                                     <h:outputText value="Pavimentos " /></td>
                                     <td>
-                                    <p:spinner size="1"  min="0"  value="#{cadastroMB.pavimentos}" >
-                                        <p:ajax update="spinnerLateral, spinnerFrente, resulField" process="@all" />
+                                    <p:spinner size="1" id="spinnerPav" min="0"  value="#{cadastroMB.projeto.qtdPavimentos}" >
+                                        <p:ajax update="spinnerLateral, spinnerFrente, resulField" process="@this" />
                                     </p:spinner>
                                     </td>
                                     <tr>
@@ -165,32 +165,47 @@
                                     <h3 style="margin-top:0">Detalhes do Projeto</h3>
                             <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
                                 <p:outputLabel for="padrao" value="Padrão: " />
-                                <p:selectOneRadio  immediate="true" id="padrao" value="#{cadastroMB.padraoProjeto}">
+                                <p:selectOneRadio  immediate="true" id="padrao" value="#{cadastroMB.projeto.tipo}">
                                     <f:selectItem itemLabel="Basico" itemValue="Basico" />
                                     <f:selectItem itemLabel="Normal" itemValue="Normal" />
                                     <p:ajax process="@this"/>
-                                    <p:ajax update="checkboxDT"/>
+                                    <p:ajax update="selectListComodos" listener="#{cadastroMB.filterComodosList}"/>
                                 </p:selectOneRadio>
                             </h:panelGrid>
                             </td>
                             </tr>
                             <p:separator/>
                             <!-- Inicio Drag Drop Comodos -->
-                            <p:dataTable id="checkboxDT" var="comodo" value="#{cadastroMB.comodos}"  selection="#{cadastroMB.comodosSelecionados}" rowKey="#{comodo.id}" style="margin-bottom:0">
-                                <f:facet name="header">
-                                    Comodos
-                                </f:facet>
-                                <p:column selectionMode="multiple" style="width:5%;text-align:center"/>
-                                <p:column headerText="Descrição">
-                                    <h:outputText value="#{comodo.descricao}" />
-                                </p:column>
-                                <p:column headerText="Year">
-                                    <h:outputText value="#{comodo.padrao}" />
-                                </p:column>
-                                <f:facet name="footer">
-                                    <p:commandButton actionListener="#{cadastroMB.calcularAreaTotalDoProjeto()}" process="checkboxDT"  icon="ui-icon-search"  value="Salvar" />
-                                </f:facet>
-                            </p:dataTable>
+                            <h:panelGrid width="100%" columns="3" cellpadding="5">
+                                <p:selectOneListbox  converter="objectConverter" immediate="true" value="#{cadastroMB.selectedComodo}" id="selectListComodos" var="com"
+                                                     filter="true" filterMatchMode="contains" >
+                                    <f:selectItems  value="#{cadastroMB.comodos}" var="comodo" itemLabel="#{comodo.tipo}" itemValue="#{comodo}" />
+                                    <p:column>
+                                        <h:outputText value="#{com.tipo}" />
+                                    </p:column>
+                                </p:selectOneListbox>
+                                <p:commandButton  value=">>>>>" actionListener="#{cadastroMB.addComodoEmComodosSelecionados}" update="comodosSelecionados" />
+                                <p:dataTable var="comSelecteds" id="comodosSelecionados" 
+                                             scrollable="true" scrollHeight="200"
+                                             selectionMode="single"
+                                             rowKey="#{comSelecteds.id}"
+                                             value="#{cadastroMB.comodosSelecionados}">
+                                    <p:column headerText="Descricao">
+                                        <h:outputText value="#{comSelecteds.tipo}" />
+                                    </p:column>
+                                    <p:column headerText="Tamanho Medio">
+                                        <h:outputText value="#{comSelecteds.tamMedio}" />
+                                    </p:column>
+                                    <p:column headerText="Remover"  style="width: 30%">
+                                        <p:commandButton style="width: 30%; height: 30px" 
+                                                         icon="ui-icon-trash"   ajax="false"
+                                                         actionListener="#{cadastroMB.removeComodoEmComodosSelecionados(comSelecteds)}" >
+
+                                        </p:commandButton>
+                                        <p:commandButton style="width: 30%; height: 30px" icon="ui-icon-search" />
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGrid>
                             <!-- Fim Drag Drop Comodos -->
                             <p:separator/>
                             <tr class="linha">
@@ -256,37 +271,59 @@
                     </p:tab>
                     <p:tab id="servicos" title="Serviços" >
                         <p:panel header="Seleção de Serviços" style="width: 100%">
-                            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                                <p:outputLabel for="basic" value="Projetos" />
-                                <p:selectManyCheckbox id="basic" >
-                                    <f:selectItem itemLabel="Arquitetonico" itemValue="" />
-                                    <f:selectItem itemLabel="Ambientacao" itemValue="" />
-                                    <f:selectItem itemLabel="Eletrico" itemValue="" />
-                                    <f:selectItem itemLabel="Estrutural" itemValue="" />
-                                    <f:selectItem itemLabel="Hidraulico" itemValue="" />
-                                </p:selectManyCheckbox>
+                            <!--Inicio Projetos -->
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <h:outputLabel for="menuProjetos" value="Projetos: " />
+                                <p:selectCheckboxMenu converter="objectConverter" id="menuProjetos"  value="#{cadastroMB.selectedServicosProjetos}" label="Selecione Aqui"
+                                                      filter="true" filterMatchMode="contains" panelStyle="width:250px">
+                                    <f:selectItems var="proj" itemLabel="#{proj.descricao}" itemValue="#{proj}" value="#{cadastroMB.servicosProjetos}" />
+                                </p:selectCheckboxMenu>
+                                <p:commandButton value="Adicionar" style="height: 29px; text-align: center" icon="ui-icon-check" update="displayProjetos" />
                             </h:panelGrid>
-                            <p:separator style="width: 100%"/>
-                            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                                <p:outputLabel for="serv" value="Serviços" />
-                                <p:selectManyCheckbox id="serv" >
-                                    <f:selectItem itemLabel="Avaliação" itemValue="" />
-                                    <f:selectItem itemLabel="Orçamento" itemValue="" />
-                                    <f:selectItem itemLabel="Documentação" itemValue="" />
-                                    <f:selectItem itemLabel="Acompanhamento" itemValue="" />
-                                    <f:selectItem itemLabel="Laudo" itemValue="" />
-                                </p:selectManyCheckbox>
+
+                            <p:outputPanel id="displayProjetos" style="width:250px;padding-left:5px;margin-top:10px">
+                                <p:dataList value="#{cadastroMB.selectedServicosProjetos}" var="projeto" emptyMessage="Nenhum Projeto">
+                                    #{projeto.descricao}
+                                </p:dataList>
+                            </p:outputPanel>
+                            <!--Fim Projetos -->
+
+                            <!--Inicio Servicos -->
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <h:outputLabel for="menuServicos" value="Serviço: " />
+                                <p:selectCheckboxMenu converter="objectConverter" id="menuServicos"  value="#{cadastroMB.selectedServicosServicos}" label="Selecione Aqui"
+                                                      filter="true" filterMatchMode="contains" panelStyle="width:250px">
+                                    <f:selectItems var="ser" itemLabel="#{ser.descricao}" itemValue="#{ser}" value="#{cadastroMB.servicosServicos}" />
+                                </p:selectCheckboxMenu>
+                                <p:commandButton value="Adicionar" style="height: 29px; text-align: center" icon="ui-icon-check" update="displayServicos" />
                             </h:panelGrid>
-                            <p:separator style="width: 100%"/>
-                            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="4">
-                                <p:outputLabel for="outros" value="Diversos" />
-                                <p:selectManyCheckbox id="outros" >
-                                    <f:selectItem itemLabel="RT" itemValue="" />
-                                    <f:selectItem itemLabel="Consultoria" itemValue="" />
-                                    <f:selectItem itemLabel="Caixa Economica" itemValue="" />
-                                    <f:selectItem itemLabel="Banco de Brasil" itemValue="" />
-                                </p:selectManyCheckbox>
+
+                            <p:outputPanel id="displayServicos" style="width:250px;padding-left:5px;margin-top:10px">
+                                <p:dataList value="#{cadastroMB.selectedServicosServicos}" var="servico" emptyMessage="Nenhum Serviço">
+                                    #{servico.descricao}
+                                </p:dataList>
+                            </p:outputPanel>
+
+                            <!--Fim Servicos -->
+
+                            <!--Inicio Outros -->
+
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <h:outputLabel for="menuOutros" value="Outros: " />
+                                <p:selectCheckboxMenu converter="objectConverter" id="menuOutros"  value="#{cadastroMB.selectedServicosOutros}" label="Selecione Aqui"
+                                                      filter="true" filterMatchMode="contains" panelStyle="width:250px">
+                                    <f:selectItems var="out" itemLabel="#{out.descricao}" itemValue="#{out}" value="#{cadastroMB.servicosOutros}" />
+                                </p:selectCheckboxMenu>
+                                <p:commandButton value="Adicionar" style="height: 29px; text-align: center" icon="ui-icon-check" update="displayOutros" />
                             </h:panelGrid>
+
+                            <p:outputPanel id="displayOutros" style="width:250px;padding-left:5px;margin-top:10px">
+                                <p:dataList value="#{cadastroMB.selectedServicosOutros}" var="outro" emptyMessage="Nenhum Serviço">
+                                    #{outro.descricao}
+                                </p:dataList>
+                            </p:outputPanel>
+
+                            <!--Fim Outros -->
                         </p:panel>
                         <p:commandButton actionListener="#{cadastroMB.viewConfirmationProject()}" icon="ui-icon-extlink" value="Confirmar Dados"  update="growl" process="@this"/>
                     </p:tab>

@@ -8,19 +8,21 @@ package com.l3construcoes.entidades;
 
 import java.io.Serializable;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
  * @author paulolira
  */
+@Document(collection = "terrenos")
 public class Terreno implements Serializable{
     
     @Id
     private String id;
     
-    private int lateral;
+    private int lateral = 1;
     
-    private int frente;
+    private int frente = 1;
     
     private int total;
 

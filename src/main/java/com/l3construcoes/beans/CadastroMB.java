@@ -9,16 +9,26 @@ import com.l3construcoes.entidades.Cliente;
 import com.l3construcoes.entidades.Comodo;
 import com.l3construcoes.entidades.Endereco;
 import com.l3construcoes.entidades.Projeto;
+import com.l3construcoes.entidades.Servico;
 import com.l3construcoes.service.ComodoService;
 import com.l3construcoes.service.ComodoServiceImpl;
+import com.l3construcoes.service.ProjetoService;
+import com.l3construcoes.service.ProjetoServiceImpl;
+import com.l3construcoes.service.ServicoService;
+import com.l3construcoes.service.ServicoServiceImpl;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 
 /**
  *
@@ -36,16 +46,6 @@ public class CadastroMB implements Serializable {
 
     private Endereco enderecoObra;
 
-    private int pavimentos;
-
-    private int frente;
-
-    private int lateral;
-
-    private String padraoProjeto;
-
-    private ComodoService comodoService = new ComodoServiceImpl();
-
     private Projeto projeto;
 
     private Comodo selectedComodo = new Comodo();
@@ -56,46 +56,102 @@ public class CadastroMB implements Serializable {
 
     private List<Comodo> comodosSelecionados;
 
+    private List<Servico> servicosProjetos;
+
+    private List<Servico> servicosServicos;
+
+    private List<Servico> servicosOutros;
+
+    private List<Servico> selectedServicosProjetos;
+
+    private List<Servico> selectedServicosServicos;
+
+    private List<Servico> selectedServicosOutros;
+
+    private ComodoService comodoService;
+
+    private ServicoService servicoService;
+    
+    private ProjetoService projetoService;
+
     @PostConstruct
     private void init() {
-        comodos = new ArrayList<Comodo>();
-        padraoProjeto = "Basico";
-        filterComodosList(getPadraoProjeto());
+        servicoService = new ServicoServiceImpl();
+        comodoService = new ComodoServiceImpl();
+        projetoService = new ProjetoServiceImpl();
         comodosSelecionados = new ArrayList<Comodo>();
-        System.err.println(comodos.size());
+        selectedServicosProjetos = new ArrayList<Servico>();
+        selectedServicosServicos = new ArrayList<Servico>();
+        selectedServicosOutros = new ArrayList<Servico>();
+        comodos = new ArrayList<Comodo>();
+        projeto = new Projeto();
+
+        servicosProjetos = servicoService.getAllServicosPorTipo("Projeto");
+        servicosOutros = servicoService.getAllServicosPorTipo("Outros");
+        servicosServicos = servicoService.getAllServicosPorTipo("Servico");
+
+        projeto.setTipo("Basico");
+        filterComodosList();
+
         this.endereco = new Endereco();
         this.cliente = new Cliente();
-        projeto = new Projeto();
+
     }
 
-    public void filterComodosList(String mPadraoProjeto) {
-        if (("Normal").equalsIgnoreCase(mPadraoProjeto)) {
-            comodos = comodoService.getAllComodosByPadrao(mPadraoProjeto);
-        } else if (("Basico").equalsIgnoreCase(mPadraoProjeto)) {
-            comodos = comodoService.getAllComodosByPadrao(mPadraoProjeto);
+    public void filterComodosList() {
+        if (("Normal").equalsIgnoreCase(projeto.getTipo())) {
+            comodos = comodoService.getAllComodosByPadrao(projeto.getTipo());
+        } else if (("Basico").equalsIgnoreCase(projeto.getTipo())) {
+            comodos = comodoService.getAllComodosByPadrao(projeto.getTipo());
         }
     }
 
+    public int carregarTamanhoTotalPorComodos(List<Comodo> allComodos) {
+        int tamanhoTotal = 0;
+        for (Comodo cm : allComodos) {
+            System.err.println("Comodos For::: "+cm.getTipo());
+            tamanhoTotal += cm.getTamMedio();
+        }
+        System.err.println("carregarTamanhoTotalPorComodos:: " + tamanhoTotal);
+        return tamanhoTotal;
+    }
+
+    public BigDecimal carregarValorTotalPorServicos(List<Servico> allServicos) {
+        BigDecimal valorTotal = new BigDecimal(0);
+        for (Servico sv : allServicos) {
+            System.err.println("Servicos For::: "+sv.getDescricao() + " Valor:: "+ sv.getValor());
+            valorTotal = valorTotal.add(sv.getValor());
+        }
+        System.err.println("carregarValorTotalPorServicos:: " + valorTotal);
+        return valorTotal;
+    }
+
     public void viewConfirmationProject() {
+        BigDecimal custo = new BigDecimal(0);
+        List<Servico> allServicos = new ArrayList<Servico>();
+        allServicos.addAll(selectedServicosOutros);
+        allServicos.addAll(selectedServicosProjetos);
+        allServicos.addAll(selectedServicosServicos);
+        projeto.setServicos(allServicos);
+        projeto.setComodos(comodosSelecionados);
+        projeto.setTamanhoTotal(carregarTamanhoTotalPorComodos(projeto.getComodos()));
+        custo = carregarValorTotalPorServicos(projeto.getServicos()).multiply(new BigDecimal(projeto.getTamanhoTotal()));
+        projeto.setCusto(custo);
+        projeto.setCliente(cliente);
+
         RequestContext.getCurrentInstance().openDialog("confirmModal");
+    }
+    
+    public void salvar(){
+        projetoService.salvar(projeto);
+        addNotificacao("Adicionado com Sucesso!!!", "Sucesso");
     }
 
     public int getCalcM2() {
         int result = 0;
-        projeto.getTerreno().setFrente(getFrente());
-        projeto.getTerreno().setLateral(getLateral());
-        projeto.setQtdPavimentos(getPavimentos());
-        result = (getLateral() * getFrente()) * getPavimentos();
+        result = (projeto.getTerreno().getLateral() * projeto.getTerreno().getFrente()) * projeto.getQtdPavimentos();
         projeto.getTerreno().setTotal(result);
         return result;
-    }
-
-    public void calcularAreaTotalDoProjeto() {
-        int total = 0;
-        for (Comodo com : comodosSelecionados) {
-            total += com.getTamMedio();
-        }
-        projeto.setTamanhoTotal(total);
     }
 
     public void copiarEnderecoCliente() {
@@ -103,6 +159,27 @@ public class CadastroMB implements Serializable {
             projeto.setEndereco(cliente.getEndereco());
         } else {
             projeto.setEndereco(new Endereco());
+        }
+    }
+
+    public void addComodoEmComodosSelecionados() {
+        if (selectedComodo != null) {
+            addNotificacao(selectedComodo.getDescricao(), "Adicionado: ");
+            comodosSelecionados.add(selectedComodo);
+        }
+    }
+
+    public void addNotificacao(String message, String tipo) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", tipo + message));
+        RequestContext.getCurrentInstance().update("form:growl");
+    }
+
+    public void removeComodoEmComodosSelecionados(Comodo c) {
+        if (c != null) {
+            System.err.println("Remove - " + c.toString());
+            comodosSelecionados.remove(c);
+            RequestContext.getCurrentInstance().update("comSelecteds");
         }
 
     }
@@ -138,30 +215,6 @@ public class CadastroMB implements Serializable {
 
     public void setEnderecoObra(Endereco enderecoObra) {
         this.enderecoObra = enderecoObra;
-    }
-
-    public int getPavimentos() {
-        return pavimentos;
-    }
-
-    public void setPavimentos(int pavimentos) {
-        this.pavimentos = pavimentos;
-    }
-
-    public int getFrente() {
-        return frente;
-    }
-
-    public void setFrente(int frente) {
-        this.frente = frente;
-    }
-
-    public int getLateral() {
-        return lateral;
-    }
-
-    public void setLateral(int fundo) {
-        this.lateral = fundo;
     }
 
     public Projeto getProjeto() {
@@ -209,16 +262,70 @@ public class CadastroMB implements Serializable {
             skip = false;
             return "confirm";
         } else {
+            System.err.println("><><><  :: " + event.getNewStep().toString());
+            if (event.getNewStep().toString().contains("servicos")) {
+                addNotificacao(String.valueOf(getCalcM2()), "Tamanho do terreno: ");
+            }
             return event.getNewStep();
         }
     }
 
-    public String getPadraoProjeto() {
-        return padraoProjeto;
+    public void onRowSelect(SelectEvent event) {
+        FacesMessage msg = new FacesMessage("Car Selected", ((Comodo) event.getObject()).getId());
+        System.err.println(">>> " + msg);
     }
 
-    public void setPadraoProjeto(String padraoProjeto) {
-        filterComodosList(padraoProjeto);
-        this.padraoProjeto = padraoProjeto;
+    public void onRowUnselect(UnselectEvent event) {
+        FacesMessage msg = new FacesMessage("Car Unselected", ((Comodo) event.getObject()).getId());
+        System.err.println(">>> " + msg);
     }
+
+    public List<Servico> getServicosProjetos() {
+        return servicosProjetos;
+    }
+
+    public void setServicosProjetos(List<Servico> servicosProjetos) {
+        this.servicosProjetos = servicosProjetos;
+    }
+
+    public List<Servico> getServicosServicos() {
+        return servicosServicos;
+    }
+
+    public void setServicosServicos(List<Servico> servicosServicos) {
+        this.servicosServicos = servicosServicos;
+    }
+
+    public List<Servico> getServicosOutros() {
+        return servicosOutros;
+    }
+
+    public void setServicosOutros(List<Servico> servicosOutros) {
+        this.servicosOutros = servicosOutros;
+    }
+
+    public List<Servico> getSelectedServicosProjetos() {
+        return selectedServicosProjetos;
+    }
+
+    public void setSelectedServicosProjetos(List<Servico> selectedServicosProjetos) {
+        this.selectedServicosProjetos = selectedServicosProjetos;
+    }
+
+    public List<Servico> getSelectedServicosServicos() {
+        return selectedServicosServicos;
+    }
+
+    public void setSelectedServicosServicos(List<Servico> selectedServicosServicos) {
+        this.selectedServicosServicos = selectedServicosServicos;
+    }
+
+    public List<Servico> getSelectedServicosOutros() {
+        return selectedServicosOutros;
+    }
+
+    public void setSelectedServicosOutros(List<Servico> selectedServicosOutros) {
+        this.selectedServicosOutros = selectedServicosOutros;
+    }
+
 }

@@ -8,16 +8,26 @@ package com.l3construcoes.entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
+import javax.persistence.CollectionTable;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
  * @author paulolira
  */
-public class Servico implements  Serializable{
+@Document(collection = "servicos")
+public class Servico implements Serializable{
+    
+    @Id
+    private String id;
     
     private String codigo;
     
     private String descricao;
+    
+    private String tipo;
     
     private  BigDecimal valor;
 
@@ -43,6 +53,58 @@ public class Servico implements  Serializable{
 
     public void setValor(BigDecimal valor) {
         this.valor = valor;
-    }        
+    }      
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 17 * hash + Objects.hashCode(this.id);
+        hash = 17 * hash + Objects.hashCode(this.codigo);
+        hash = 17 * hash + Objects.hashCode(this.descricao);
+        hash = 17 * hash + Objects.hashCode(this.valor);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Servico other = (Servico) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.codigo, other.codigo)) {
+            return false;
+        }
+        if (!Objects.equals(this.descricao, other.descricao)) {
+            return false;
+        }
+        if (!Objects.equals(this.valor, other.valor)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     
 }

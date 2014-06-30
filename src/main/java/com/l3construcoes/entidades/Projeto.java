@@ -12,11 +12,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
  * @author paulolira
  */
+@Document(collection = "projetos")
 public class Projeto implements  Serializable{
     
     @Id
@@ -131,14 +133,13 @@ public class Projeto implements  Serializable{
     }
 
     public int getQtdPavimentos() {
+        System.err.println("Get");
         return qtdPavimentos;
     }
 
     public void setQtdPavimentos(int qtdPavimentos) {
+        System.err.println("Set:: " + qtdPavimentos );
         this.qtdPavimentos = qtdPavimentos;
     }
-    
-    
-    
 
 }

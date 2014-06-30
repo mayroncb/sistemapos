@@ -22,7 +22,7 @@ import org.springframework.stereotype.Repository;
  * @author paulolira
  */
 @Repository("comodoDao")
-public class ComodoDaoImp implements ComodoDao{
+public class ComodoDaoImp implements ComodoDao, Serializable{
     
     ApplicationContext ctx
                 = new AnnotationConfigApplicationContext(SpringMongoConfig.class);

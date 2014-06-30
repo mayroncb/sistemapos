@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:p="http://primefaces.org/ui">
-     
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
     <h:head>
         <title>Confirmar Dados</title>
         <style type="text/css">
@@ -14,21 +14,53 @@
             }
         </style>
     </h:head>
-     
+
     <h:body>
-        <label class="label">Nome:  </label> <p:outputLabel value="#{cadastroMB.cliente.nome}" /><br/>
-        <label class="label">Email: </label><p:outputLabel value="#{cadastroMB.cliente.email}" /><br/>
-        <label class="label">CPF:   </label><p:outputLabel value="#{cadastroMB.cliente.cpf}" />
-        <label class="label">Telefone: </label><p:outputLabel value="#{cadastroMB.cliente.telefone}" />
-        <p:separator/>
-        <label class="label">Endereco do Cliente </label>
-        <p:separator/>
-        <label class="label">Rua:  </label> <p:outputLabel value="#{cadastroMB.cliente.endereco.rua}" /><br/>
-        <label class="label">Bairro:  </label> <p:outputLabel value="#{cadastroMB.cliente.endereco.bairro}" />
-        <label class="label">Numero:  </label> <p:outputLabel value="#{cadastroMB.cliente.endereco.numero}" /><br/>
-        <label class="label">Cidade:  </label> <p:outputLabel value="#{cadastroMB.cliente.endereco.cidade}" />
-        <label class="label">Estado:  </label> <p:outputLabel value="#{cadastroMB.cliente.endereco.estado}" /><br/>
-        <label class="label">Cep:  </label> <p:outputLabel value="#{cadastroMB.cliente.endereco.cep}" /><br/>
+        <h:form>
+            <label class="label">Nome:  </label> <p:outputLabel value="#{cadastroMB.cliente.nome}" /><br/>
+            <label class="label">Email: </label><p:outputLabel value="#{cadastroMB.cliente.email}" /><br/>
+            <label class="label">CPF:   </label><p:outputLabel value="#{cadastroMB.cliente.cpf}" />
+            <label class="label">Telefone: </label><p:outputLabel value="#{cadastroMB.cliente.telefone}" />
+            <p:separator/>
+            <label class="label">Endereco do Cliente </label>
+            <p:separator/>
+            <label class="label">Rua:  </label> <p:outputLabel value="#{cadastroMB.cliente.endereco.rua}" /><br/>
+            <label class="label">Bairro:  </label> <p:outputLabel value="#{cadastroMB.cliente.endereco.bairro}" />
+            <label class="label">Numero:  </label> <p:outputLabel value="#{cadastroMB.cliente.endereco.numero}" /><br/>
+            <label class="label">Cidade:  </label> <p:outputLabel value="#{cadastroMB.cliente.endereco.cidade}" />
+            <label class="label">Estado:  </label> <p:outputLabel value="#{cadastroMB.cliente.endereco.estado}" /><br/>
+            <label class="label">Cep:  </label> <p:outputLabel value="#{cadastroMB.cliente.endereco.cep}" /><br/>
+            <p:separator/>
+            <label class="label">Dados do Projeto </label>
+            <label class="label">- Tipo  </label> <p:outputLabel value="#{cadastroMB.projeto.tipo}" /><br/>
+            <p:separator/>
+            <label class="label">Terreno:  </label>
+            <label class="label">Frente:  </label> <p:outputLabel value="#{cadastroMB.projeto.terreno.frente}" />
+            <label class="label">Lateral:  </label> <p:outputLabel value="#{cadastroMB.projeto.terreno.lateral}" />
+            <label class="label">Pavimentos:  </label> <p:outputLabel value="#{cadastroMB.projeto.qtdPavimentos}" />
+            <label class="label">Tamanho Total:  </label> <p:outputLabel value="#{cadastroMB.projeto.terreno.total}" /><br/>
+            <p:separator/>
+            <label class="label">Comodos:  </label> <p:dataTable var="comodo" value="#{cadastroMB.projeto.comodos}" >
+                <p:column headerText="Descrição">
+                    <h:outputText value="#{comodo.descricao}" />
+                </p:column>
+                <p:column headerText="Tamanho">
+                    <h:outputText value="#{comodo.tamMedio}" />
+                </p:column>
+
+            </p:dataTable><br/>
+            <p:separator/>
+            <label class="label">Servicos:  </label> <p:dataTable var="serv" value="#{cadastroMB.projeto.servicos}" >
+                <p:column headerText="Descrição">
+                    <h:outputText value="#{serv.tipo}" />
+                </p:column>
+                <p:column headerText="Valor">
+                    <h:outputText value="#{serv.valor}" />
+                </p:column>
+            </p:dataTable><br/>
+            <p:separator/>
+            <p:commandButton value="Salvar" action="#{cadastroMB.salvar}"/>
+        </h:form>
     </h:body>
-     
+
 </html>
