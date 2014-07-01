@@ -171,7 +171,7 @@ public class CadastroMB implements Serializable {
 
     public void addNotificacao(String message, String tipo) {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", tipo + message));
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, tipo, message));
         RequestContext.getCurrentInstance().update("form:growl");
     }
 
@@ -179,7 +179,8 @@ public class CadastroMB implements Serializable {
         if (c != null) {
             System.err.println("Remove - " + c.toString());
             comodosSelecionados.remove(c);
-            RequestContext.getCurrentInstance().update("comSelecteds");
+            RequestContext.getCurrentInstance().update("form:comodosSelecionados");
+            addNotificacao(c.getDescricao(), "Removido: ");
         }
 
     }

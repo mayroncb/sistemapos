@@ -45,6 +45,7 @@ public class Projeto implements  Serializable{
     private int qtdPavimentos;
     
     public Projeto() {
+        qtdPavimentos = 1;
         endereco = new Endereco();
         servicos = new ArrayList<Servico>();
         comodos = new ArrayList<Comodo>();
