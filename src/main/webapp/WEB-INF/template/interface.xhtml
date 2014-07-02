@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+<!-- <f:loadBundle basename="br.gov.pb.joaopessoa.serem.resources.messages" var="msg"/> -->
+<h:head>
+	<title>Sistem L3</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+	<!-- <link href="#{facesContext.externalContext.requestContextPath}/resources/imagens/favicon.ico" media='screen' rel='shortcut icon' />
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/util.js"></script>
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/jquery.maskMoney.js"></script> -->	
+</h:head>
+<h:body>
+	<ui:debug />
+	<div id="container">
+		<div id="head">
+			<div id="menu_topo">
+				<ui:insert name="menuTopo">
+					<ul>
+						<li><a href="#">#{msg['link.ajuda']}</a></li>
+						<li>|</li>
+						<li><a href="#{request.contextPath}/j_spring_security_logout">#{msg['link.sair']}</a></li>
+					</ul>
+				</ui:insert>
+			</div>
+                    <!--     <div id="logomarcas">
+				<h1 class="none">#{msg['logomarca.nfse']}</h1>
+			</div> -->
+		</div>
+		<div id="menu">
+			<ui:insert name="menu">
+				<h:form id="formMenuPrincipal">
+					<p:menubar id="menuPrincipal" model="#{menuMB.menuModel}" />
+				</h:form>
+			</ui:insert>
+		</div>
+		<div id="center">
+			<ul id="breadcrumb">
+				<ui:insert name="caminhoMenu">
+					<li>Caminho</li>
+					<li>Caminho</li>
+					<li class="strong retiraMarcador">Link Atual</li>
+				</ui:insert>
+				<ui:insert name="retiraAvisoCampoObrigatorio">
+					<li class="campoObrigatorio retiraMarcador">* campos obrigatórios</li>
+				</ui:insert>
+			</ul>
+
+			<div id="content">
+				<h:form>
+                                        <p:growl autoUpdate="true" id="growl"  showSummary="true" life="2000" showDetail="true" />
+                                </h:form>
+				<ui:insert name="conteudo">
+				</ui:insert>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>
