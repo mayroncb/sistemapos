@@ -1,26 +1,18 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/interface.xhtml">
 
-    <f:view contentType="text/html">
-        <h:head>
-            <f:facet name="first">
-                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/interface.css" />
-                <title>L3 Sistema</title>
-            </f:facet>
-        </h:head>
-
-        <h:body>
+	<ui:define name="conteudo">  
             <h:form id="form" class="forms">
-                <p:growl id="growl"   life="2000" showDetail="true"/>
+                
                 <p:wizard flowListener="#{cadastroMB.onFlowProcess}">
                     <p:tab id="pessoal" title="Cliente">
                         <p:panel header="Dados do Cliente" style="width: 100%">
-                            <p:messages />
+                            
                             <fieldset>
                                 <legend>Dados do Cliente</legend>
                                 <table class="corpo">
@@ -325,11 +317,12 @@
 
                             <!--Fim Outros -->
                         </p:panel>
-                        <p:commandButton actionListener="#{cadastroMB.viewConfirmationProject()}" icon="ui-icon-extlink" value="Confirmar Dados"  update="growl" process="@this"/>
+                        <p:commandButton actionListener="#{cadastroMB.viewConfirmationProject()}" icon="ui-icon-extlink" value="Confirmar Dados"   process="@this"/>
                     </p:tab>
                 </p:wizard>
             </h:form>
-        </h:body>
-    </f:view>
-</html>
+         
+	</ui:define>
+
+</ui:composition>
 
