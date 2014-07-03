@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.l3construcoes.util;
 
 import com.mongodb.Mongo;
@@ -21,20 +20,19 @@ import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
  * @author paulolira
  */
 @Configuration
-public class SpringMongoConfig implements Serializable{
-    
-   public @Bean
-	MongoDbFactory mongoDbFactory() throws Exception {
-		return new SimpleMongoDbFactory(new MongoClient(), "l3sistema");
-	}
- 
-	public @Bean
-	MongoTemplate mongoTemplate() throws Exception {
-		MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory());
- 
-		return mongoTemplate;
- 
-	}
+public class SpringMongoConfig implements Serializable {
 
-    
+    public @Bean
+    MongoDbFactory mongoDbFactory() throws Exception {
+        return new SimpleMongoDbFactory(new MongoClient(), "l3sistema");
+    }
+
+    public @Bean
+    MongoTemplate mongoTemplate() throws Exception {
+        MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory());
+
+        return mongoTemplate;
+
+    }
+
 }

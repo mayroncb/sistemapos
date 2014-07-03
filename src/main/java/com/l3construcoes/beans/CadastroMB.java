@@ -29,6 +29,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
+import org.springframework.stereotype.Component;
 
 /**
  *
@@ -36,7 +37,8 @@ import org.primefaces.event.UnselectEvent;
  */
 @ManagedBean(name = "cadastroMB")
 @SessionScoped
-public class CadastroMB implements Serializable {
+@Component
+public class CadastroMB  {
 
     private boolean skip;
 
@@ -138,7 +140,7 @@ public class CadastroMB implements Serializable {
         custo = carregarValorTotalPorServicos(projeto.getServicos()).multiply(new BigDecimal(projeto.getTamanhoTotal()));
         projeto.setCusto(custo);
         projeto.setCliente(cliente);
-
+        System.err.println("<ASDA<SD<ASD<AS<D<D");
         RequestContext.getCurrentInstance().openDialog("confirmModal");
     }
     
@@ -172,7 +174,7 @@ public class CadastroMB implements Serializable {
     public void addNotificacao(String message, String tipo) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, tipo, message));
-        RequestContext.getCurrentInstance().update("form:growl");
+        RequestContext.getCurrentInstance().update("growl");
     }
 
     public void removeComodoEmComodosSelecionados(Comodo c) {
@@ -263,22 +265,12 @@ public class CadastroMB implements Serializable {
             skip = false;
             return "confirm";
         } else {
-            System.err.println("><><><  :: " + event.getNewStep().toString());
+           
             if (event.getNewStep().toString().contains("servicos")) {
                 addNotificacao(String.valueOf(getCalcM2()), "Tamanho do terreno: ");
             }
             return event.getNewStep();
         }
-    }
-
-    public void onRowSelect(SelectEvent event) {
-        FacesMessage msg = new FacesMessage("Car Selected", ((Comodo) event.getObject()).getId());
-        System.err.println(">>> " + msg);
-    }
-
-    public void onRowUnselect(UnselectEvent event) {
-        FacesMessage msg = new FacesMessage("Car Unselected", ((Comodo) event.getObject()).getId());
-        System.err.println(">>> " + msg);
     }
 
     public List<Servico> getServicosProjetos() {

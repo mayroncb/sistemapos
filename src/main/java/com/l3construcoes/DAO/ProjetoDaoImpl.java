@@ -12,6 +12,7 @@ import java.io.Serializable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.stereotype.Repository;
 
  
 
@@ -19,6 +20,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
  *
  * @author paulolira
  */
+@Repository("projetoDao")
 public class ProjetoDaoImpl implements ProjetoDao, Serializable {
     ApplicationContext ctx
                 = new AnnotationConfigApplicationContext(SpringMongoConfig.class);
