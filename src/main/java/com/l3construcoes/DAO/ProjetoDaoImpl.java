@@ -9,6 +9,7 @@ package com.l3construcoes.DAO;
 import com.l3construcoes.entidades.Projeto;
 import com.l3construcoes.util.SpringMongoConfig;
 import java.io.Serializable;
+import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -84,6 +85,11 @@ public class ProjetoDaoImpl implements ProjetoDao, Serializable {
     @Override
     public void deleteAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Projeto> getAllProjects() {
+        return mongoOperation.findAll(Projeto.class);
     }
     
     

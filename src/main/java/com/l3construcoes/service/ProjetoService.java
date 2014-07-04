@@ -7,6 +7,7 @@
 package com.l3construcoes.service;
 
 import com.l3construcoes.entidades.Projeto;
+import java.util.List;
 
 /**
  *
@@ -15,5 +16,6 @@ import com.l3construcoes.entidades.Projeto;
 public interface ProjetoService {
     
     void salvar(Projeto projeto);
+    List<Projeto> getProjects();
     
 }

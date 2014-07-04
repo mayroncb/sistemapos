@@ -1,0 +1,312 @@
+@font-face {
+  font-family: 'fontello';
+  src: url('#{facesContext.externalContext.requestContextPath}/resources/assets/fonts/fontello.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+/*==================================================
+* Datalist Border 0
+* ===============================================*/
+
+.dataListEmbedded .ui-widget-content {
+    border: none !important;
+}
+
+.ui-datalist-content.ui-widget-content{
+    background: none !important;
+}
+
+.ui-widget, .ui-datatable TABLE, .ui-inputfield {
+    font-size: 9pt !important;
+    font-family: arial,sans-serif !important;
+}
+
+/*==================================================
+* Data Table
+* ===============================================*/
+
+.ui-datatable th div.ui-dt-c,
+.ui-datatable .ui-datatable-data td div.ui-dt-c,
+.ui-datatable .ui-datatable-data-empty td div.ui-dt-c,
+.ui-datatable tfoot td div.ui-dt-c {
+    padding: 2px 4px !important;
+}
+
+.ui-datatable thead .ui-dt-c {
+    text-align: left !important;
+}
+
+.columnTextNormal .ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
+    white-space: normal !important;
+}
+
+.ui-widget, .ui-datatable TABLE, .ui-inputfield {
+    font-family:  FontAwesome,arial,sans-serif !important;
+}
+
+/*==================================================
+* System
+* ===============================================*/
+.label-margin{
+    margin-right: 10px;
+}
+
+.floatButton{
+    margin-left: 8px;
+}
+
+/*==================================================
+* Dialog
+* ===============================================*/
+.ui-dialog.ui-widget-content .ui-dialog-titlebar{
+    color: #3784b1;
+    border-bottom: 1px solid #c3ddec;
+    background-image: -webkit-linear-gradient(top, #fdfefe, #edf5fa);
+    background-image: -moz-linear-gradient(top, #fdfefe, #edf5fa);
+    background-image: -ms-linear-gradient(top, #fdfefe, #edf5fa);
+    background-image: -o-linear-gradient(top, #fdfefe, #edf5fa);
+    background-image: linear-gradient(top, #fdfefe, #edf5fa);
+}
+.ui-dialog.ui-widget-content .ui-dialog-title {
+    font-size: 16px;
+}
+
+.ui-dialog-footer {
+    text-align: right !important;
+}
+
+/*==================================================
+* Message Required Validation
+* ===============================================*/
+
+.panel-label-and-message{
+    width: 100%;
+}
+
+.panel-label-and-message textarea{
+    width: 100%;
+}
+
+.panel-label-and-message input{
+    width: 100%;
+}
+
+.panel-label-and-message input.ui-autocomplete-input{
+    width: 94% !important;
+}
+
+.size-autocomplete .panel-label-and-message input.ui-autocomplete-input{
+    width: 89% !important;
+}
+
+.size-autocomplete-full .panel-label-and-message input.ui-autocomplete-input{
+    width: 98% !important;
+}
+
+.size-autocomplete-full2 .panel-label-and-message input.ui-autocomplete-input{
+    width: 103% !important;
+}
+
+.size-autocomplete .panel-label-and-message input{
+    width: 100%;
+}
+
+.panel-label-and-message .label-container {
+    text-align: right;
+    padding: 0 2px 0 0 !important;
+}
+
+.panel-label-and-message .content-container {
+    text-align: left;
+    padding: 0;
+    white-space: inherit;
+}
+
+.panel-company input{
+    width: 100% !important;
+}
+
+.panel-position input{
+    width: 100% !important;
+}
+
+.panel-position textarea{
+    width: 100% !important;
+}
+
+.panel-label-and-message .label {
+    font-size: 9pt;
+    color: #333333;
+    padding: 0;
+}
+
+.panel-label-and-message .label.error {
+    color: #CC0000;
+}
+
+.panel-label-and-message .label.req-indicator {
+    color: #CC0000;
+    font-weight: bold;
+}
+
+.panel-label-and-message .help-container,
+.panel-label-and-message .error-message {
+    font-family: Arial, sans-serif;
+    font-size: 7pt;
+    font-weight: normal;
+}
+
+.panel-label-and-message .help-container {
+    padding: 0;
+    color: #046381;
+}
+
+.panel-label-and-message .error-message {
+    color: #CC0000;
+}
+
+/*==================================================
+* Formulários
+* ===============================================*/
+.emb-form-group{
+    border-bottom: 1px solid #EDEDED;
+    margin-bottom: 0;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.auto-size .ui-button-icon-only {
+    position: absolute;
+}
+
+.auto-size input{
+    width: 100%;
+}
+
+.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield{
+    width: auto;
+}
+
+.ui-autocomplete {
+    width: 97% !important;
+}
+
+.auto-size .ui-autocomplete {
+    width: 90% !important;
+}
+
+.inputFormAutocomplete input{
+    width: 140px;
+}
+
+.input204Autocomplete input{
+    width: 204%;
+}
+
+/*==================================================
+* Widgets
+* ===============================================*/
+.ui-widget-content a {
+    color: #ffffff;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    background-color: #3784B1;
+    background-image: -moz-linear-gradient(to bottom, #3784B1, #31759E);
+    border-color: #31759E;
+}
+
+/*==================================================
+* Select One Menu
+* ===============================================*/
+.ui-selectonemenu .ui-selectonemenu-trigger {
+    width: 25px !important;
+}
+
+.ui-selectonemenu .ui-selectonemenu-trigger .ui-icon {
+    margin-top: 5px !important;
+}
+
+.ui-selectonemenu .ui-selectonemenu-label{
+    min-width: 170px !important;
+}
+
+/*==================================================
+* Calendar
+* ===============================================*/
+.ui-priority-primary, .ui-widget-content .ui-priority-primary, .ui-widget-header .ui-priority-primary {
+    background-color: #3784B1;
+    background-image: -moz-linear-gradient(center top , #3784B1, #3784B1);
+}
+
+/*==================================================
+* Inplace
+* ===============================================*/
+.ui-dialog.ui-widget-content .ui-dialog-content {
+    font-size: 9pt;
+}
+
+/*==================================================
+* Fieldset
+* ===============================================*/
+
+.embFieldset .ui-fieldset, .ui-fieldset .ui-fieldset-legend {
+    background-color: transparent;
+    border-color: transparent;
+    font-size: 9pt;
+    font-weight: bold;
+    background-color: transparent;
+    background-image: none;
+    background-repeat: no-repeat;
+    border-color: transparent;
+    border-image: none;
+    border-radius: 4px;
+    border-style: none;
+    border-width: 0px;
+    box-shadow: none;
+    cursor: auto;
+    text-shadow: none;
+    margin-bottom: 0px;
+}
+
+.embFieldset legend{
+    width: auto;
+}
+
+/*==================================================
+* Checkbox
+* ===============================================*/
+
+.ui-icon-check {
+    background-position: -65px -146px;
+}
+
+.ui-state-highlight .ui-icon {
+    background-image: url("/web/javax.faces.resource/images/ui-icons_333333_256x240.png.xhtml?ln=primefaces-bootstrap");
+}
+
+/*==================================================
+* Redio Button
+* ===============================================*/
+.ui-icon-bullet {
+    background-position: -81px -145px;
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding: 1em 1.4em 0em !important;
+}
+
+.ui-messages-error-icon{
+    background:  url('#{facesContext.externalContext.requestContextPath}/resources/img/errorMessage.png') !important;
+}
+
+.ui-growl-image-error{
+    background:  url('#{facesContext.externalContext.requestContextPath}/resources/img/errorGrow.png') !important;
+}
+
+.font-size-20{
+    font-size: 20px !important;
+}

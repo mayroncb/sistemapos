@@ -262,12 +262,12 @@
                         </p:panel>
                     </p:tab>
                     <p:tab id="servicos" title="Serviços" >
-                        <p:panel header="Seleção de Serviços" style="width: 100%">
+                        <p:panel header="Seleção de Serviços" >
                             <!--Inicio Projetos -->
                             <h:panelGrid columns="3" cellpadding="5">
                                 <h:outputLabel for="menuProjetos" value="Projetos: " />
                                 <p:selectCheckboxMenu converter="objectConverter" id="menuProjetos"  value="#{cadastroMB.selectedServicosProjetos}" label="Selecione Aqui"
-                                                      filter="true" filterMatchMode="contains" panelStyle="width:250px">
+                                                      filter="true" filterMatchMode="contains" >
                                     <f:selectItems var="proj" itemLabel="#{proj.descricao}" itemValue="#{proj}" value="#{cadastroMB.servicosProjetos}" />
                                 </p:selectCheckboxMenu>
                                 <p:commandButton value="Adicionar" style="height: 29px; text-align: center" icon="ui-icon-check" update="displayProjetos" />
@@ -284,10 +284,10 @@
                             <h:panelGrid columns="3" cellpadding="5">
                                 <h:outputLabel for="menuServicos" value="Serviço: " />
                                 <p:selectCheckboxMenu converter="objectConverter" id="menuServicos"  value="#{cadastroMB.selectedServicosServicos}" label="Selecione Aqui"
-                                                      filter="true" filterMatchMode="contains" panelStyle="width:250px">
+                                                      filter="true" filterMatchMode="contains" >
                                     <f:selectItems var="ser" itemLabel="#{ser.descricao}" itemValue="#{ser}" value="#{cadastroMB.servicosServicos}" />
                                 </p:selectCheckboxMenu>
-                                <p:commandButton value="Adicionar" style="height: 29px; text-align: center" icon="ui-icon-check" update="displayServicos" />
+                                <p:commandButton value="Adicionar"  icon="ui-icon-check" update="displayServicos" />
                             </h:panelGrid>
 
                             <p:outputPanel id="displayServicos" style="width:250px;padding-left:5px;margin-top:10px">
@@ -303,10 +303,10 @@
                             <h:panelGrid columns="3" cellpadding="5">
                                 <h:outputLabel for="menuOutros" value="Outros: " />
                                 <p:selectCheckboxMenu converter="objectConverter" id="menuOutros"  value="#{cadastroMB.selectedServicosOutros}" label="Selecione Aqui"
-                                                      filter="true" filterMatchMode="contains" panelStyle="width:250px">
+                                                      filter="true" filterMatchMode="contains" >
                                     <f:selectItems var="out" itemLabel="#{out.descricao}" itemValue="#{out}" value="#{cadastroMB.servicosOutros}" />
                                 </p:selectCheckboxMenu>
-                                <p:commandButton value="Adicionar" style="height: 29px; text-align: center" icon="ui-icon-check" update="displayOutros" />
+                                <p:commandButton value="Adicionar" icon="ui-icon-check" update="displayOutros" />
                             </h:panelGrid>
 
                             <p:outputPanel id="displayOutros" style="width:250px;padding-left:5px;margin-top:10px">

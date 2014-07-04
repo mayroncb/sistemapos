@@ -9,6 +9,7 @@ package com.l3construcoes.service;
 import com.l3construcoes.DAO.ProjetoDao;
 import com.l3construcoes.DAO.ProjetoDaoImpl;
 import com.l3construcoes.entidades.Projeto;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,11 @@ public class ProjetoServiceImpl implements ProjetoService{
     @Override
     public void salvar(Projeto projeto) {
         dao.salvar(projeto);
+    }
+
+    @Override
+    public List<Projeto> getProjects() {
+        return dao.getAllProjects();
     }
     
 }

@@ -8,6 +8,7 @@ package com.l3construcoes.DAO;
 
 import com.l3construcoes.entidades.Projeto;
 import java.io.Serializable;
+import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -17,5 +18,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface ProjetoDao extends CrudRepository<Projeto, Serializable>{
     
     void salvar(Projeto projeto);
+    List<Projeto> getAllProjects();
     
 }
