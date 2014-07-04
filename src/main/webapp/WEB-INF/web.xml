@@ -41,4 +41,12 @@
         <param-name>com.sun.faces.enableRestoreView11Compatibility</param-name>
         <param-value>true</param-value>
     </context-param>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/html/error/404.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/html/error/404.xhtml</location>
+    </error-page>
 </web-app>
