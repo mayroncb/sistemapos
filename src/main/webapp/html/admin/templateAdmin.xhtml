@@ -310,13 +310,26 @@
                         </li>
                         <li class="treeview">
                             <a href="#">
-                                <i class="fa fa-bar-chart-o"></i>
+                                <i class="fa fa-folder-open-o"></i>
                                 <span>Projetos</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="#{facesContext.externalContext.requestContextPath}/html/admin/wizardAddProjeto.xhtml"><i class="fa fa-angle-double-right"></i>Adicionar</a></li>
                                 <li><a href="#{facesContext.externalContext.requestContextPath}/html/admin/listarProjetos.xhtml"><i class="fa fa-angle-double-right"></i>Procurar</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-gears"></i>
+                                <span>Manutenção</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="#{facesContext.externalContext.requestContextPath}/html/admin/wizardAddProjeto.xhtml"><i class="fa fa-angle-double-right"></i>Clientes</a></li>
+                                <li><a href="#{facesContext.externalContext.requestContextPath}/html/admin/wizardAddProjeto.xhtml"><i class="fa fa-angle-double-right"></i>Projetos</a></li>
+                                <li><a href="#{facesContext.externalContext.requestContextPath}/html/maintenance/maintComodo.xhtml"><i class="fa fa-angle-double-right"></i>Comodos</a></li>
+                                <li><a href="#{facesContext.externalContext.requestContextPath}/html/admin/listarProjetos.xhtml"><i class="fa fa-angle-double-right"></i>Servicos</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -340,7 +353,7 @@
 
                 <!-- Main content -->
                 <section class="content">
-                    <p:growl id="growl" showDetail="true" autoUpdate="true" />
+                    <p:growl id="growl" showDetail="true" life="200000" autoUpdate="true" />
                     <ui:insert name="contentjsf">
 
                     </ui:insert>
@@ -352,7 +365,7 @@
         <!-- AdminLTE App -->
         <script src="#{facesContext.externalContext.requestContextPath}/resources/assets/js/AdminLTE/app.js" type="text/javascript"></script>  
         <!-- AdminLTE for demo purposes -->
-        <script src="#{facesContext.externalContext.requestContextPath}/resources/assets/js/AdminLTE/demo.js" type="text/javascript"></script>
+         
     </h:body>
 
 </html>

@@ -17,6 +17,7 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface ComodoDao extends CrudRepository<Comodo, Serializable>{
     
+    void alterarComodo(Comodo c);
     List<Comodo> getAllComodos();
     List<Comodo> getAllComodosByPadrao(String padrao);
     Comodo getComodo(String descricao);

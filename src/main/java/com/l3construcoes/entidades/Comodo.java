@@ -21,8 +21,6 @@ public class Comodo implements Serializable{
     @Id
     private String id;
     
-    private String tipo;
-    
     private String descricao;
     
     private int tamMedio;
@@ -45,14 +43,6 @@ public class Comodo implements Serializable{
 
     public void setTamMedio(int tamMedio) {
         this.tamMedio = tamMedio;
-    }
-    
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     public String getDescricao() {

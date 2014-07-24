@@ -16,21 +16,19 @@ import com.l3construcoes.service.ProjetoService;
 import com.l3construcoes.service.ProjetoServiceImpl;
 import com.l3construcoes.service.ServicoService;
 import com.l3construcoes.service.ServicoServiceImpl;
-import java.io.Serializable;
+import com.l3construcoes.util.CalcUtils;
+import com.l3construcoes.util.Navigation;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.event.UnselectEvent;
 import org.springframework.stereotype.Component;
 
 /**
@@ -40,13 +38,11 @@ import org.springframework.stereotype.Component;
 @ManagedBean(name = "cadastroMB")
 @SessionScoped
 @Component
-public class CadastroMB  {
+public class CadastroMB {
 
     private boolean skip;
 
     private Cliente cliente;
-
-    private Endereco endereco;
 
     private Endereco enderecoObra;
 
@@ -75,8 +71,10 @@ public class CadastroMB  {
     private ComodoService comodoService;
 
     private ServicoService servicoService;
-    
+
     private ProjetoService projetoService;
+    
+    private Comodo comodoEmSelecionados;
 
     @PostConstruct
     private void init() {
@@ -97,7 +95,6 @@ public class CadastroMB  {
         projeto.setTipo("Basico");
         filterComodosList();
 
-        this.endereco = new Endereco();
         this.cliente = new Cliente();
 
     }
@@ -110,52 +107,41 @@ public class CadastroMB  {
         }
     }
 
-    public int carregarTamanhoTotalPorComodos(List<Comodo> allComodos) {
-        int tamanhoTotal = 0;
-        for (Comodo cm : allComodos) {
-            System.err.println("Comodos For::: "+cm.getTipo());
-            tamanhoTotal += cm.getTamMedio();
-        }
-        System.err.println("carregarTamanhoTotalPorComodos:: " + tamanhoTotal);
-        return tamanhoTotal;
-    }
-
-    public BigDecimal carregarValorTotalPorServicos(List<Servico> allServicos) {
-        BigDecimal valorTotal = new BigDecimal(0);
-        for (Servico sv : allServicos) {
-            System.err.println("Servicos For::: "+sv.getDescricao() + " Valor:: "+ sv.getValor());
-            valorTotal = valorTotal.add(sv.getValor());
-        }
-        System.err.println("carregarValorTotalPorServicos:: " + valorTotal);
-        return valorTotal;
-    }
-
     public void viewConfirmationProject() {
-        BigDecimal custo = new BigDecimal(0);
         List<Servico> allServicos = new ArrayList<Servico>();
         allServicos.addAll(selectedServicosOutros);
         allServicos.addAll(selectedServicosProjetos);
         allServicos.addAll(selectedServicosServicos);
         projeto.setServicos(allServicos);
+        
+        BigDecimal custo = new BigDecimal(0);
+        BigDecimal valuesServices = new BigDecimal(BigInteger.ONE);
+        valuesServices = CalcUtils.loadAllValuesByService(projeto.getServicos());
+        int tamanhoTotal = CalcUtils.loadAllSizeByRoom(comodosSelecionados);
+        
+
         projeto.setComodos(comodosSelecionados);
-        projeto.setTamanhoTotal(carregarTamanhoTotalPorComodos(projeto.getComodos()));
-        custo = carregarValorTotalPorServicos(projeto.getServicos()).multiply(new BigDecimal(projeto.getTamanhoTotal()));
+        projeto.setTamanhoTotal(tamanhoTotal);
+        if (projeto.getQtdPavimentos() > 1) {
+            custo = CalcUtils.calcValueOfTheProject(projeto.getQtdPavimentos(),
+                    valuesServices, tamanhoTotal);
+        } else {
+            custo = CalcUtils.calcValueOfTheProject(valuesServices, tamanhoTotal);
+        }
         projeto.setCusto(custo);
         projeto.setCliente(cliente);
-        System.err.println("<ASDA<SD<ASD<AS<D<D");
-        RequestContext.getCurrentInstance().openDialog("confirmModal");
     }
-    
-    public void salvar(){
+
+    public void salvar() {
         projetoService.salvar(projeto);
         addNotificacao("Adicionado com Sucesso!!!", "Sucesso");
         RequestContext.getCurrentInstance().closeDialog("confirmModal");
-        
+
     }
 
     public int getCalcM2() {
         int result = 0;
-        result = (projeto.getTerreno().getLateral() * projeto.getTerreno().getFrente()) * projeto.getQtdPavimentos();
+        result = (projeto.getTerreno().getLateral() * projeto.getTerreno().getFrente());
         projeto.getTerreno().setTotal(result);
         return result;
     }
@@ -172,6 +158,7 @@ public class CadastroMB  {
         if (selectedComodo != null) {
             addNotificacao(selectedComodo.getDescricao(), "Adicionado: ");
             comodosSelecionados.add(selectedComodo);
+            RequestContext.getCurrentInstance().update("form:comodosSelecionados");
         }
     }
 
@@ -183,12 +170,10 @@ public class CadastroMB  {
 
     public void removeComodoEmComodosSelecionados(Comodo c) {
         if (c != null) {
-            System.err.println("Remove - " + c.toString());
             comodosSelecionados.remove(c);
             RequestContext.getCurrentInstance().update("form:comodosSelecionados");
             addNotificacao(c.getDescricao(), "Removido: ");
         }
-
     }
 
     public Cliente getCliente() {
@@ -196,7 +181,6 @@ public class CadastroMB  {
     }
 
     public void setCliente(Cliente cliente) {
-        System.out.println(cliente.getNome());
         this.cliente = cliente;
     }
 
@@ -206,14 +190,6 @@ public class CadastroMB  {
 
     public void setSkip(boolean skip) {
         this.skip = skip;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
     }
 
     public Endereco getEnderecoObra() {
@@ -265,13 +241,16 @@ public class CadastroMB  {
     }
 
     public String onFlowProcess(FlowEvent event) {
+        System.err.print(event.getOldStep().toString());
         if (skip) {
             skip = false;
             return "confirm";
         } else {
-           
+
             if (event.getNewStep().toString().contains("servicos")) {
                 addNotificacao(String.valueOf(getCalcM2()), "Tamanho do terreno: ");
+            } else if (event.getOldStep().toString().contains("servicos")) {
+                viewConfirmationProject();
             }
             return event.getNewStep();
         }
@@ -324,5 +303,15 @@ public class CadastroMB  {
     public void setSelectedServicosOutros(List<Servico> selectedServicosOutros) {
         this.selectedServicosOutros = selectedServicosOutros;
     }
+
+    public Comodo getComodoEmSelecionados() {
+         return comodoEmSelecionados;
+    }
+
+    public void setComodoEmSelecionados(Comodo comodoEmSelecionados) {
+        this.comodoEmSelecionados = comodoEmSelecionados;
+    }
+    
+    
 
 }

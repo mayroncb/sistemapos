@@ -34,5 +34,12 @@ public class ComodoServiceImpl implements ComodoService, Serializable{
     public List<Comodo> getAllComodosByPadrao(String padrao) {
         return comodoDao.getAllComodosByPadrao(padrao);
     }
+
+    @Override
+    public void alterarComodo(Comodo c) {
+        comodoDao.alterarComodo(c);
+    }
+    
+    
     
 }

@@ -15,6 +15,7 @@ import java.util.List;
  */
 public interface ComodoService {
     
+    void alterarComodo(Comodo c);
     List<Comodo> getAllComodos();
     List<Comodo> getAllComodosByPadrao(String padrao);
     

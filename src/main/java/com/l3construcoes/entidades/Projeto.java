@@ -134,12 +134,10 @@ public class Projeto implements  Serializable{
     }
 
     public int getQtdPavimentos() {
-        System.err.println("Get");
         return qtdPavimentos;
     }
 
     public void setQtdPavimentos(int qtdPavimentos) {
-        System.err.println("Set:: " + qtdPavimentos );
         this.qtdPavimentos = qtdPavimentos;
     }
 

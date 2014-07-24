@@ -1,328 +1,562 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	template="/html/admin/templateAdmin.xhtml">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/html/admin/templateAdmin.xhtml">
 
-	<ui:define name="contentjsf">  
-            <h:form id="form" >
-                
-                <p:wizard flowListener="#{cadastroMB.onFlowProcess}">
-                    <p:tab id="pessoal" title="Cliente">
-                        <p:panel header="Dados do Cliente" style="width: 100%">
+    <ui:define name="contentjsf">  
+        <h:form id="form" >
+            <p:wizard  nextLabel="Próximo" backLabel="Voltar" showNavBar="true" showStepStatus="true" flowListener="#{cadastroMB.onFlowProcess}">
+                <p:tab  id="pessoal" title="Cliente">
+                    <section>
+                        <div class="row">
+                            <!-- left column -->
+                            <div class="col-md-5">
+                                <!-- general form elements -->
+                                <div class="box box-primary">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Dados do Cliente</h3>
+                                    </div><!-- /.box-header -->
+                                    <div  class="box-body">
+                                        <div class="input-group">
+                                            <span style="width: 70px !important" class="input-group-addon">Nome</span>
+                                            <p:inputText  id="nome" requiredMessage="Campo * Nome Obrigatório" required="true" size="30" 
+                                                          value="#{cadastroMB.cliente.nome}" />
+                                        </div>
+                                        <br/>
+                                        <div class="input-group">
+                                            <span style="width: 70px !important" class="input-group-addon">
+                                                <i class="fa fa-envelope" />
+                                            </span>
+                                            <p:inputText value="#{cadastroMB.cliente.email}" size="30"   label="Email"/>
+                                        </div>
+                                        <br/>
+                                        <div class="input-group">
+                                            <span style="width: 70px !important" class="input-group-addon">CPF</span>
+                                            <p:inputMask placeholder="___.___.___-__" mask="999.999.999-99" value="#{cadastroMB.cliente.cpf}" size="11"  label="CPF" />
+                                        </div>
+                                        <br/>
+                                        <div class="input-group">
+                                            <span style="width: 70px !important" class="input-group-addon">Nasc</span>
+                                            <p:calendar placeholder="__/__/____" size="11" navigator="true" pattern="dd/MM/yyyy" locale="br"  value="#{cadastroMB.cliente.dataNascimento}"  />
+                                        </div>
+                                        <br/>
+                                        <div class="input-group">
+                                            <span style="width: 70px !important" class="input-group-addon">
+                                                <i class="fa fa-phone-square"/>
+                                            </span>
+                                            <p:inputMask placeholder="(__)____-____" mask="(99)9999-9999" size="11" value="#{cadastroMB.cliente.telefone}" label="Telefone"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-7">
+                                <div class="box box-primary">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Endereço</h3>
+                                    </div><!-- /.box-header -->
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <div class="input-group">
+                                                    <span style="width: 70px !important" class="input-group-addon">Rua</span>
+                                                    <p:inputText id="clienteRua" value="#{cadastroMB.cliente.endereco.rua}"  size="30" label="rua" />
+                                                    <br/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <span style="width: 70px !important" class="input-group-addon">Nº</span>
+                                                    <p:inputText id="clienteNumero" size="5" value="#{cadastroMB.cliente.endereco.numero}" label="Numero" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="input-group">
+                                            <span style="width: 70px !important" class="input-group-addon">Bairro</span>
+                                            <p:inputText id="clienteBairro" value="#{cadastroMB.cliente.endereco.bairro}" size="30" label="rua" />
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <div class="input-group">
+                                                    <span style="width: 70px !important" class="input-group-addon">Cidade</span>
+                                                    <p:inputText id="clienteCidade" value="#{cadastroMB.cliente.endereco.cidade}" size="30" label="Cidade" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <span style="width: 70px !important" class="input-group-addon">UF</span>
+                                                    <p:inputText id="clienteEstado" value="#{cadastroMB.cliente.endereco.estado}" size="5"  label="Estado" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="input-group">
+                                            <span style="width: 70px !important" class="input-group-addon">CEP</span>
+                                            <p:inputMask id="clienteCep" mask="99.999-999" placeholder="__.___-___" size="8" value="#{cadastroMB.cliente.endereco.cep}" label="Cep" />
+                                        </div>
+                                    </div>
+                                    <!-- Fim Drag Drop Comodos -->
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </p:tab>
+
+                <p:tab id="obra" title="Projeto">
+                    <section class="content">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div  class="box box box-primary">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Detalhes do Projeto</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="col-lg-12" >
+                                                <div class="input-group" >
+                                                    <span class="input-group-addon">
+                                                        Padrão:
+                                                    </span>
+                                                    <p:selectOneListbox style="width: 100%"   id="padrao" value="#{cadastroMB.projeto.tipo}">
+                                                        <f:selectItem  itemLabel="Basico" itemValue="Basico" />
+                                                        <f:selectItem itemLabel="Normal" itemValue="Normal" />
+                                                        <p:ajax process="@this"/>
+                                                        <p:ajax update="selectListComodos"   listener="#{cadastroMB.filterComodosList}"/>
+                                                    </p:selectOneListbox>
+                                                    <span class="input-group-addon">
+                                                        Residencial
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <div class="col-xs-8">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        Pavimentos:
+                                                    </span>
+                                                    <p:spinner size="1" id="spinnerPav" min="1"  value="#{cadastroMB.projeto.qtdPavimentos}" />
+                                                </div>
+                                                <br/>
+                                            </div>
+
+                                            <div class="col-xs-4">
+                                                <div class="input-group">
+                                                    <span  class="input-group-addon">
+                                                        Repetição: 
+                                                    </span>
+                                                    <p:spinner size="2" id="spinnerRepet" min="0" value="1" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        Endereço / <h:outputText value="Mesmo endereço do cliente? "/> 
+                                                        <p:selectBooleanCheckbox valueChangeListener="#{cadastroMB.copiarEnderecoCliente()}" value="#{cadastroMB.copiarEndereco}">
+                                                            <p:ajax process="@this"  update="ProjetoRua, projetoBairro, projetoNumero, projetoEstado, projetoCep, projetoCidade"  />
+                                                        </p:selectBooleanCheckbox>
+                                                    </span>
+                                                </div>
+                                                <br/>
+                                                <div class="row">
+                                                    <div class="col-lg-8">
+                                                        <div class="input-group">
+                                                            <span style="width: 70px !important" class="input-group-addon">Rua</span>
+                                                            <p:inputText id="ProjetoRua" value="#{cadastroMB.projeto.endereco.rua}"  size="30" label="rua" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="input-group">
+                                                            <span style="width: 70px !important" class="input-group-addon">Nº</span>
+                                                            <p:inputText id="projetoNumero" size="5" value="#{cadastroMB.projeto.endereco.numero}" label="Numero" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <div class="input-group">
+                                                    <span style="width: 70px !important" class="input-group-addon">Bairro</span>
+                                                    <p:inputText id="projetoBairro" value="#{cadastroMB.projeto.endereco.bairro}" size="30" label="rua" />
+                                                </div>
+                                                <br/>
+                                                <div class="row">
+                                                    <div class="col-lg-8">
+                                                        <div class="input-group">
+                                                            <span style="width: 70px !important" class="input-group-addon">Cidade</span>
+                                                            <p:inputText id="projetoCidade" value="#{cadastroMB.projeto.endereco.cidade}" size="30" label="Cidade" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="input-group">
+                                                            <span style="width: 70px !important" class="input-group-addon">UF</span>
+                                                            <p:inputText id="projetoEstado" value="#{cadastroMB.projeto.endereco.estado}" size="5"  label="Estado" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <div class="input-group">
+                                                    <span style="width: 70px !important" class="input-group-addon">CEP</span>
+                                                    <p:inputMask id="projetoCep" mask="99.999-999" size="8" value="#{cadastroMB.projeto.endereco.cep}" label="Cep" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- /.box-body -->
+                            <div class="col-md-5">
+                                <div class="box box-danger">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Detalhes do Terreno</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        Frente:
+                                                    </span>
+                                                    <p:spinner size="2" id="spinnerFrente"   value="#{cadastroMB.projeto.terreno.frente}"  min="1" >
+                                                        <p:ajax update="spinnerLateral, spinnerFrente, resulField" process="@this" />
+                                                    </p:spinner>
+                                                </div>
+                                                <br/>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        Lateral:
+                                                    </span>
+                                                    <p:spinner size="2" id="spinnerLateral"   value="#{cadastroMB.projeto.terreno.lateral}"  min="1" >
+                                                        <p:ajax update="spinnerLateral, spinnerFrente, resulField" process="@this" />
+                                                    </p:spinner>    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br></br>
+                                        <div class="row">
+                                            <div class="col-lg-11">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        Total:
+                                                    </span>
+                                                    <h:inputText class="form-control" style="text-align: right" value="#{cadastroMB.calcM2}" id="resulField" disabled="true" size="2" />
+                                                    <span class="input-group-addon">m<sup style="font-size: 12px">2</sup></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+                        </div><!-- /.box -->
+
+
+                        <!-- Inicio Drag Drop Comodos -->
+                        <div class="row">
+                            <!-- left column -->
+                            <div class="col-md-4">
+                                <!-- general form elements -->
+                                <div class="box box-primary">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Seleção de Cômodos</h3>
+                                    </div><!-- /.box-header -->
+                                    <div  class="box-body">
+                                        <p:selectOneListbox  style="width: 100% " converter="objectConverter"  
+                                                             value="#{cadastroMB.selectedComodo}" id="selectListComodos"
+                                                             var="com"
+                                                             filter="true" filterMatchMode="contains" >
+                                            <f:selectItems  value="#{cadastroMB.comodos}" var="comodo" itemLabel="#{comodo.descricao}" itemValue="#{comodo}" />
+
+                                            <p:column>
+                                                <h:outputText value="#{com.descricao}" />
+                                            </p:column>
+                                            <p:column>
+                                                <p:commandButton   icon="ui-icon-seek-next" actionListener="#{cadastroMB.addComodoEmComodosSelecionados}">
+                                                    <p:ajax process="@this"/>
+                                                </p:commandButton>
+                                            </p:column>
+                                        </p:selectOneListbox>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-7">
+                                <div class="box box-primary">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Cômodos Selecionados</h3>
+                                    </div><!-- /.box-header -->
+                                    <div class="box-body highlight">
+                                        <p:dataTable var="comSelecteds" id="comodosSelecionados" 
+                                                     scrollable="true" scrollHeight="200"
+                                                     selectionMode="single"
+                                                     rowKey="#{comSelecteds.id}"
+                                                     value="#{cadastroMB.comodosSelecionados}">
+                                            <p:column headerText="Descrição">
+                                                <h:outputText value="#{comSelecteds.descricao}" />
+                                            </p:column>
+                                            <p:column headerText="Tamanho Médio">
+                                                <h:outputText value="#{comSelecteds.tamMedio}" />
+                                            </p:column>
+                                            <p:column headerText="Ação"  style="width: 30%">
+                                                <p:commandButton style="width: 30%; height: 30px" 
+                                                                 icon="ui-icon-trash" 
+                                                                 actionListener="#{cadastroMB.removeComodoEmComodosSelecionados(comSelecteds)}" >
+                                                </p:commandButton>
+                                                <p:commandButton update=":formComDetail" oncomplete="PF('comodoDialog').show()" style="width: 30%; height: 30px" icon="ui-icon-search" >
+                                                    <f:setPropertyActionListener value="#{comSelecteds}" target="#{cadastroMB.comodoEmSelecionados}" />
+                                                </p:commandButton>
+                                            </p:column>
+                                        </p:dataTable>
+                                        <!-- Fim Drag Drop Comodos -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </p:tab>
+                <p:tab id="servicos" title="Serviços" >
+                    <section  class="content">
+                        <!--Inicio Projetos -->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <!-- general form elements -->
+                                <div class="box box-primary">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Projetos</h3>
+                                    </div><!-- /.box-header -->
+                                    <!-- form start -->
+
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-btn">
+                                                    <p:commandLink styleClass="btn btn-primary" value="Adicionar" update="displayProjetos" />
+                                                </div>
+                                                <p:selectCheckboxMenu style="width: 100%" converter="objectConverter" id="menuProjetos"  value="#{cadastroMB.selectedServicosProjetos}" label="Selecione Aqui"
+                                                                      filter="true" filterMatchMode="contains" >
+                                                    <f:selectItems var="proj" itemLabel="#{proj.descricao}" itemValue="#{proj}" value="#{cadastroMB.servicosProjetos}" />
+                                                </p:selectCheckboxMenu>
+                                            </div>
+                                            <p:outputPanel id="displayProjetos" style="width:100%;  margin-top:10px">
+                                                <p:dataList value="#{cadastroMB.selectedServicosProjetos}" var="projeto" emptyMessage="Nenhum Projeto">
+                                                    #{projeto.descricao}
+                                                </p:dataList>
+                                            </p:outputPanel>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <!-- general form elements -->
+                                <div class="box box-primary">
+                                    <div class="box-header">
+                                        <h3 class="box-title"> Serviços</h3>
+                                    </div><!-- /.box-header -->
+                                    <!-- form start -->
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-btn">
+                                                    <p:commandLink styleClass="btn btn-primary" value="Adicionar" update="displayServicos" />
+                                                </div>
+                                                <p:selectCheckboxMenu style="width: 100%" converter="objectConverter" id="menuServicos"  value="#{cadastroMB.selectedServicosServicos}" label="Selecione Aqui"
+                                                                      filter="true" filterMatchMode="contains" >
+                                                    <f:selectItems var="ser" itemLabel="#{ser.descricao}" itemValue="#{ser}" value="#{cadastroMB.servicosServicos}" />
+                                                </p:selectCheckboxMenu>
+                                            </div>
+                                            <p:outputPanel id="displayServicos" style="width:100%; margin-top:10px">
+                                                <p:dataList value="#{cadastroMB.selectedServicosServicos}" var="servico" emptyMessage="Nenhum Serviço">
+                                                    #{servico.descricao}
+                                                </p:dataList>
+                                            </p:outputPanel>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <!-- general form elements -->
+                                <div class="box box-primary">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Outros</h3>
+                                    </div><!-- /.box-header -->
+                                    <!-- form start -->
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-btn">
+                                                    <p:commandLink styleClass="btn btn-primary" value="Adicionar" update="displayOutros" />
+                                                </div>
+                                                <p:selectCheckboxMenu style="width: 100%" converter="objectConverter" id="menuOutros"  value="#{cadastroMB.selectedServicosOutros}" label="Selecione Aqui"
+                                                                      filter="true" filterMatchMode="contains" >
+                                                    <f:selectItems var="out" itemLabel="#{out.descricao}" itemValue="#{out}" value="#{cadastroMB.servicosOutros}" />
+                                                </p:selectCheckboxMenu>
+
+                                            </div>
+                                            <p:outputPanel  id="displayOutros" style="width:100%; margin-top:10px">
+                                                <p:dataList value="#{cadastroMB.selectedServicosOutros}" var="outro" emptyMessage="Nenhum Serviço">
+                                                    #{outro.descricao}
+                                                </p:dataList>
+                                            </p:outputPanel>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </p:tab>
+                <p:tab id="confirm"  title="Confirmação" >
+                    <!-- Main content -->
+                    <section class="content invoice">                    
+                        <!-- title row -->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h2 class="page-header">
+                                    <i class="fa fa-globe"></i> L3 Arquitetura e Engenharia
+                                    <small class="pull-right">Date: 2/10/2014</small>
+                                </h2>                            
+                            </div><!-- /.col -->
+                        </div>
+                        <!-- info row -->
+                        <div class="row invoice-info">
+                            <div class="col-sm-4 invoice-col">
+                                Contratada:
+                                <address>
+                                    <strong>L3 Arquitetura e Engenharia</strong><br/>
+                                    Rua João Pessoa, Centro, 90 <br/>
+                                    Santa Luzia, PB <br/>
+                                    Phone: (804) 123-5432<br/>
+                                    Email: info@almasaeedstudio.com
+                                    CNPJ: 09023493-0001
+                                </address>
+                            </div><!-- /.col -->
+                            <div class="col-sm-4 invoice-col">
+
+                            </div><!-- /.col -->
+                            <div class="col-sm-4 invoice-col">
+                                Contratante: 
+                                <address>
+                                    <strong><p:outputLabel value="#{cadastroMB.cliente.nome}"/> </strong><br/>
+                                    Rua: #{cadastroMB.cliente.endereco.rua},
+                                    #{cadastroMB.cliente.endereco.numero},
+                                    #{cadastroMB.cliente.endereco.bairro},<br/>
+                                    #{cadastroMB.cliente.endereco.cidade},
+                                    #{cadastroMB.cliente.endereco.estado}<br/>
+                                    Cep: #{cadastroMB.cliente.endereco.cep} <br/>
+                                    Telefone:  #{cadastroMB.cliente.telefone } <br/>
+                                    Email:  #{cadastroMB.cliente.email}  <br/>
+                                </address>
+                            </div><!-- /.col -->
+
+                        </div><!-- /.row -->
+
+                        <!-- Table row -->
+                        <div class="row">
+                            <div class="col-xs-12 table-responsive">
+                                <p:dataTable var="comodo" value="#{cadastroMB.comodosSelecionados}" >
+                                    <p:column headerText="Descrição" style="text-align:right">
+                                        <h:outputText value="#{comodo.descricao}" />
+                                    </p:column>
+                                    <p:column headerText="Tamanho" style="text-align:right">
+                                        <h:outputText value="#{comodo.tamMedio}" />
+                                    </p:column>
+                                </p:dataTable><br/>
+
+                                <p:separator/>
+
+                                <p:dataTable styleClass="box"  var="serv" value="#{cadastroMB.projeto.servicos}" >
+                                    <p:column headerText="Descrição" style="text-align:right">
+                                        <h:outputText value="#{serv.descricao}" />
+                                    </p:column>
+                                    <p:column headerText="Valor" style="text-align:right">
+                                        <h:outputText value="#{serv.valor}" >
+                                            <f:convertNumber currencySymbol="R$" type="currency"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                </p:dataTable><br/>                            
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+
+                        <div class="row">
+
+                            <div class="col-xs-12">
+                                <p class="lead">Custo do Projeto</p>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tr>
+                                            <th style="width:50%">Serviços</th>
+                                            <td>20</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Totam em m<sup style="font-size: 20px">2</sup></th>
+                                            <td>#{cadastroMB.projeto.tamanhoTotal}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total:</th>
+                                            <td>R$ #{cadastroMB.projeto.custo}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+
+                        <!-- this row will not appear when printing -->
+                        <div class="row no-print">
+                            <div class="col-xs-12">
+                                <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
+                                <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>
+                            </div>
+                        </div>
+                    </section><!-- /.content -->
+                </p:tab>
+            </p:wizard>
+        </h:form>
+        <p:dialog id="comDialog"  header="Detalhes do Cômodo" width="350px" resizable="false"  widgetVar="comodoDialog" modal="true" > 
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-lg-push-12">
+                        <!-- general form elements -->
+                        <div class="box box-primary">
                             
-                            <fieldset>
-                                <legend>Dados do Cliente</legend>
-                                <table class="corpo">
-                                    <tr class="linha">
-                                        <td class="padraoColuna-200"></td>
-                                        <td></td>
-                                        <td class="padraoColuna-100"></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr class="linha">
-                                        <td>
-                                    <h:outputText  value="Nome " />
-                                    </td>
-                                    <td>
-                                    <p:inputText  id="nome" requiredMessage="Campo * Nome Obrigatorio" required="true" size="30" 
-                                                 value="#{cadastroMB.cliente.nome}" />
-                                    </td>
-                                    </tr>
-                                    <tr class="linha">
-                                        <td>
-                                    <h:outputText value="Email " />
-                                    </td>
-                                    <td>
-                                    <p:inputText value="#{cadastroMB.cliente.email}" size="30"   label="Email"/>
-                                    </td>
-                                    </tr>
-                                    <tr class="linha">
-                                        <td>
-                                    <h:outputText value="CPF/CNPJ " /></td>
-                                    <td>
-                                    <p:inputMask mask="999.999.999-99" value="#{cadastroMB.cliente.cpf}"   label="CPF" /></td>
-                                    <td>
-                                    <h:outputText value="Telefone" /></td>
-                                    <td>
-                                    <p:inputMask  mask="(99)9999-9999" size="10" value="#{cadastroMB.cliente.telefone}" label="Telefone"/>
-                                    </td>
-                                    </tr>
-                                </table>
+                            <div  class="box-body">
+                                <p:panel id="comodoDetail">
+                                    <h:form id="formComDetail">
+                                        <div class="input-group">
+                                            <span style="width: 88px !important" class="input-group-addon">Descrição</span>
+                                            <p:inputText disabled="true"  id="descModal"  size="15" 
+                                                         value="#{cadastroMB.comodoEmSelecionados.descricao }" />
+                                        </div>
+                                        <br/>
+                                        <div class="input-group">
+                                            <span style="width: 88px !important" class="input-group-addon">Padrão</span>
+                                            <p:inputText  disabled="true" id="padraoModal"  size="15" 
+                                                          value="#{cadastroMB.comodoEmSelecionados.padrao }" />
+                                        </div>
+                                        <br/>
+                                        <div class="input-group">
+                                            <span style="width: 88px !important" class="input-group-addon">Tamanho</span>
+                                            <p:inputText  id="tamModal" disabled="true"  size="15" 
+                                                          value="#{cadastroMB.comodoEmSelecionados.tamMedio }" />
+                                        </div>
+                                    </h:form>
+                                </p:panel>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+          
+        </p:dialog>   
 
-                                <p:separator/>
-                                <legend>Endereco do Cliente</legend>
-                                <p:separator/>
-                                <table>
-                                    <tr class="linha">
-                                        <td class="padraoColuna-200"></td>
-                                        <td></td>
-                                        <td class="padraoColuna-100"></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr class="linha">
-                                        <td>
-                                    <h:outputLabel value="Rua"/></td>
-                                    <td>
-                                    <p:inputText value="#{cadastroMB.cliente.endereco.rua}" size="30" label="rua" />
-                                    </td>
-                                    </tr>
-                                    <tr class="linha">
-                                        <td>
-                                    <h:outputLabel value="Bairro"/></td>
-                                    <td>
-                                    <p:inputText value="#{cadastroMB.cliente.endereco.bairro}" size="30" label="rua" />
-                                    </td>
-                                    <td>
-                                    <h:outputText value="Numero "/>
-                                    </td>
-                                    <td><p:inputText size="8" value="#{cadastroMB.cliente.endereco.numero}" label="Numero" /></td>
-                                    </tr>
-                                    <tr class="linha">
-                                        <td>
-                                    <h:outputLabel value="Cidade "/></td>
-                                    <td >
-                                    <p:inputText value="#{cadastroMB.cliente.endereco.cidade}" size="30" label="Cidade" />
-                                    </td>
-                                    <td>
-                                    <h:outputText value="Cep "/>
-                                    </td>
-                                    <td><p:inputMask mask="99.999-999" size="8" value="#{cadastroMB.cliente.endereco.cep}" label="Cep" /></td>
-                                    </tr>
-                                    <tr class="linha">
-                                        <td>
-                                    <h:outputLabel value="Estado"/></td>
-                                    <td>
-                                    <p:inputText value="#{cadastroMB.cliente.endereco.estado}" size="50" label="Estado" />
-                                    </td>
-                                    </tr>
-                                </table>
-                            </fieldset>
 
-                        </p:panel>
-                    </p:tab>
-
-                    <p:tab id="obra" title="Obra">
-                        <p:panel header="Projeto">
-                            <fieldset>
-                                <legend>Dados do Terreno</legend>
-                                <table class="corpo">
-                                    <tr class="linha">
-                                        <td class="padraoColuna-200"></td>
-                                        <td></td>
-                                        <td class="padraoColuna-100"></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr class="linha">
-                                        <td>
-                                    <h:outputText  value="Frente " />
-                                    </td>
-                                    <td>
-                                    <p:spinner id="spinnerFrente" size="3" value="#{cadastroMB.projeto.terreno.frente}"  min="0" >
-                                        <p:ajax update="spinnerLateral, spinnerFrente, resulField" process="@this" />
-                                    </p:spinner>
-                                    </td>
-                                    <td>
-                                    <h:outputText value="Lateral " />
-                                    </td>
-                                    <td>
-                                    <p:spinner id="spinnerLateral" size="3" value="#{cadastroMB.projeto.terreno.lateral}"  min="0" >
-                                        <p:ajax update="spinnerLateral, spinnerFrente, resulField" process="@this" />
-                                    </p:spinner>
-                                    
-                                    </td>
-                                    <td>
-                                    <h:outputText value="Pavimentos " /></td>
-                                    <td>
-                                    <p:spinner size="1" id="spinnerPav" min="0"  value="#{cadastroMB.projeto.qtdPavimentos}" >
-                                        <p:ajax update="spinnerLateral, spinnerFrente, resulField" process="@this" />
-                                    </p:spinner>
-                                    </td>
-                                    <tr>
-                                        <td>
-                                    <h:outputText value="Total"/>
-                                    </td>
-                                    <td>
-                                    <p:inputText value="#{cadastroMB.calcM2}" id="resulField" disabled="true" size="1" /> m2</td>
-                                    </tr>
-                                    </tr>
-                                </table>
-                            </fieldset>
-                            <br/><p:separator/>
-                            <tr class="linha">
-                                <td>
-
-                                    <h3 style="margin-top:0">Detalhes do Projeto</h3>
-                            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                                <p:outputLabel for="padrao" value="Padrão: " />
-                                <p:selectOneRadio  immediate="true" id="padrao" value="#{cadastroMB.projeto.tipo}">
-                                    <f:selectItem itemLabel="Basico" itemValue="Basico" />
-                                    <f:selectItem itemLabel="Normal" itemValue="Normal" />
-                                    <p:ajax process="@this"/>
-                                    <p:ajax update="selectListComodos" listener="#{cadastroMB.filterComodosList}"/>
-                                </p:selectOneRadio>
-                            </h:panelGrid>
-                            </td>
-                            </tr>
-                            <p:separator/>
-                            <!-- Inicio Drag Drop Comodos -->
-                            <h:panelGrid width="100%" columns="3" cellpadding="5">
-                                <p:selectOneListbox  converter="objectConverter" immediate="true" value="#{cadastroMB.selectedComodo}" id="selectListComodos" var="com"
-                                                     filter="true" filterMatchMode="contains" >
-                                    <f:selectItems  value="#{cadastroMB.comodos}" var="comodo" itemLabel="#{comodo.tipo}" itemValue="#{comodo}" />
-                                    <p:column>
-                                        <h:outputText value="#{com.tipo}" />
-                                    </p:column>
-                                </p:selectOneListbox>
-                                <p:commandButton  value=">>>>>" actionListener="#{cadastroMB.addComodoEmComodosSelecionados}" update="comodosSelecionados" />
-                                <p:dataTable var="comSelecteds" id="comodosSelecionados" 
-                                             scrollable="true" scrollHeight="200"
-                                             selectionMode="single"
-                                             rowKey="#{comSelecteds.id}"
-                                             value="#{cadastroMB.comodosSelecionados}">
-                                    <p:column headerText="Descricao">
-                                        <h:outputText value="#{comSelecteds.tipo}" />
-                                    </p:column>
-                                    <p:column headerText="Tamanho Medio">
-                                        <h:outputText value="#{comSelecteds.tamMedio}" />
-                                    </p:column>
-                                    <p:column headerText="Ação"  style="width: 30%">
-                                        <p:commandButton style="width: 30%; height: 30px" 
-                                                         icon="ui-icon-trash" 
-                                                         actionListener="#{cadastroMB.removeComodoEmComodosSelecionados(comSelecteds)}" >
-
-                                        </p:commandButton>
-                                        <p:commandButton style="width: 30%; height: 30px" icon="ui-icon-search" />
-                                    </p:column>
-                                </p:dataTable>
-                            </h:panelGrid>
-                            <!-- Fim Drag Drop Comodos -->
-                            <p:separator/>
-                            <tr class="linha">
-                                <td>
-                            <h:outputText value="Mesmo endereço do cliente? "/> 
-                            <p:selectBooleanCheckbox valueChangeListener="#{cadastroMB.copiarEnderecoCliente()}" value="#{cadastroMB.copiarEndereco}">
-                                <p:ajax process="@this"  update="ProjetoRua, projetoBairro, projetoNumero, projetoEstado, projetoCep, projetoCidade"  />
-                            </p:selectBooleanCheckbox> </td>
-
-                            </tr>
-                            <p:separator/>
-
-                            <fieldset>
-                                <legend>Endereco da Obra</legend>
-                                <table>
-
-                                    <tr class="linha">
-                                        <td class="padraoColuna-200"></td>
-                                        <td></td>
-                                        <td class="padraoColuna-100"></td>
-                                        <td></td>
-                                    </tr>
-
-                                    <tr class="linha">
-                                        <td>
-                                    <h:outputLabel value="Rua"/></td>
-                                    <td>
-                                    <p:inputText id="ProjetoRua" value="#{cadastroMB.projeto.endereco.rua}" size="30" label="rua" />
-                                    </td>
-                                    </tr>
-                                    <tr class="linha">
-                                        <td>
-                                    <h:outputLabel value="Bairro"/></td>
-                                    <td>
-                                    <p:inputText id="projetoBairro" value="#{cadastroMB.projeto.endereco.bairro}" size="30" label="rua" />
-                                    </td>
-                                    <td>
-                                    <h:outputText value="Numero "/>
-                                    </td>
-                                    <td><p:inputText id="projetoNumero" size="8" value="#{cadastroMB.projeto.endereco.numero}" label="Numero" /></td>
-                                    </tr>
-                                    <tr class="linha">
-                                        <td>
-                                    <h:outputLabel value="Cidade "/></td>
-                                    <td >
-                                    <p:inputText id="projetoCidade" value="#{cadastroMB.projeto.endereco.cidade}" size="30" label="Cidade" />
-                                    </td>
-                                    <td>
-                                    <h:outputText value="Cep "/>
-                                    </td>
-                                    <td><p:inputMask id="projetoCep" mask="99.999-999" size="8" value="#{cadastroMB.projeto.endereco.cep}" label="Cep" /></td>
-                                    </tr>
-                                    <tr class="linha">
-                                        <td>
-                                    <h:outputLabel value="Estado"/></td>
-                                    <td>
-                                    <p:inputText id="projetoEstado" value="#{cadastroMB.projeto.endereco.estado}" size="50" label="Estado" />
-                                    </td>
-                                    </tr>
-                                </table>
-                            </fieldset>
-                        </p:panel>
-                    </p:tab>
-                    <p:tab id="servicos" title="Serviços" >
-                        <p:panel header="Seleção de Serviços" >
-                            <!--Inicio Projetos -->
-                            <h:panelGrid columns="3" cellpadding="5">
-                                <h:outputLabel for="menuProjetos" value="Projetos: " />
-                                <p:selectCheckboxMenu converter="objectConverter" id="menuProjetos"  value="#{cadastroMB.selectedServicosProjetos}" label="Selecione Aqui"
-                                                      filter="true" filterMatchMode="contains" >
-                                    <f:selectItems var="proj" itemLabel="#{proj.descricao}" itemValue="#{proj}" value="#{cadastroMB.servicosProjetos}" />
-                                </p:selectCheckboxMenu>
-                                <p:commandButton value="Adicionar" style="height: 29px; text-align: center" icon="ui-icon-check" update="displayProjetos" />
-                            </h:panelGrid>
-
-                            <p:outputPanel id="displayProjetos" style="width:250px;padding-left:5px;margin-top:10px">
-                                <p:dataList value="#{cadastroMB.selectedServicosProjetos}" var="projeto" emptyMessage="Nenhum Projeto">
-                                    #{projeto.descricao}
-                                </p:dataList>
-                            </p:outputPanel>
-                            <!--Fim Projetos -->
-
-                            <!--Inicio Servicos -->
-                            <h:panelGrid columns="3" cellpadding="5">
-                                <h:outputLabel for="menuServicos" value="Serviço: " />
-                                <p:selectCheckboxMenu converter="objectConverter" id="menuServicos"  value="#{cadastroMB.selectedServicosServicos}" label="Selecione Aqui"
-                                                      filter="true" filterMatchMode="contains" >
-                                    <f:selectItems var="ser" itemLabel="#{ser.descricao}" itemValue="#{ser}" value="#{cadastroMB.servicosServicos}" />
-                                </p:selectCheckboxMenu>
-                                <p:commandButton value="Adicionar"  icon="ui-icon-check" update="displayServicos" />
-                            </h:panelGrid>
-
-                            <p:outputPanel id="displayServicos" style="width:250px;padding-left:5px;margin-top:10px">
-                                <p:dataList value="#{cadastroMB.selectedServicosServicos}" var="servico" emptyMessage="Nenhum Serviço">
-                                    #{servico.descricao}
-                                </p:dataList>
-                            </p:outputPanel>
-
-                            <!--Fim Servicos -->
-
-                            <!--Inicio Outros -->
-
-                            <h:panelGrid columns="3" cellpadding="5">
-                                <h:outputLabel for="menuOutros" value="Outros: " />
-                                <p:selectCheckboxMenu converter="objectConverter" id="menuOutros"  value="#{cadastroMB.selectedServicosOutros}" label="Selecione Aqui"
-                                                      filter="true" filterMatchMode="contains" >
-                                    <f:selectItems var="out" itemLabel="#{out.descricao}" itemValue="#{out}" value="#{cadastroMB.servicosOutros}" />
-                                </p:selectCheckboxMenu>
-                                <p:commandButton value="Adicionar" icon="ui-icon-check" update="displayOutros" />
-                            </h:panelGrid>
-
-                            <p:outputPanel id="displayOutros" style="width:250px;padding-left:5px;margin-top:10px">
-                                <p:dataList value="#{cadastroMB.selectedServicosOutros}" var="outro" emptyMessage="Nenhum Serviço">
-                                    #{outro.descricao}
-                                </p:dataList>
-                            </p:outputPanel>
-
-                            <!--Fim Outros -->
-                        </p:panel>
-                        <p:commandButton actionListener="#{cadastroMB.viewConfirmationProject()}" icon="ui-icon-extlink" value="Confirmar Dados"   process="@this"/>
-                    </p:tab>
-                </p:wizard>
-            </h:form>
-         
-	</ui:define>
+    </ui:define>
 
 </ui:composition>
 

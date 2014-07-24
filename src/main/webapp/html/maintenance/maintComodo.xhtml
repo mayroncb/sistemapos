@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/html/admin/templateAdmin.xhtml">
+
+    <ui:define name="contentjsf">  
+        <h:form id="form" >
+
+            <section class="content">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-12">
+                        <!-- general form elements -->
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <h3 class="box-title">Quick Example</h3>
+                            </div><!-- /.box-header -->
+                            <!-- form start -->
+
+                            <div class="box-body">
+
+                                <!-- /.box-body -->
+
+
+                                <p:dataTable scrollable="true" id="comodos"  widgetVar="comodos" scrollHeight="250" var="com" value="#{comodoMB.comodos}">
+
+                                    <p:column  headerText="Descricao">
+                                        <h:outputText  value="#{com.descricao}" />
+                                    </p:column>
+
+                                    <p:column  headerText="Tam. Medio">
+                                        <h:outputText  value="#{com.tamMedio}"/>
+                                    </p:column>
+
+                                    <p:column  headerText="Padrão">
+                                        <h:outputText value="#{com.padrao}" >
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="Ação" width="10%" >
+                                        <p:commandButton  style="width: 100%"   update=":value:comodoDetail" oncomplete="PF('comodoDialog').show()" icon="ui-icon-search" >
+                                            <f:setPropertyActionListener value="#{com}" target="#{comodoMB.selectedComodo}" />
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </h:form>
+        <h:form id="value">
+            <p:dialog id="comDialog"  header="Detalhes do Cômodo" width="350px" resizable="false"  widgetVar="comodoDialog" modal="true" > 
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-lg-12">
+                        <!-- general form elements -->
+                        <div class="box box-primary">
+                            <div  class="box-body">
+                                <p:panel id="comodoDetail">
+                                    <div class="input-group">
+                                        <span style="width: 88px !important" class="input-group-addon">Descrição</span>
+                                        <p:inputText id="descModal"  size="15" 
+                                                     value="#{comodoMB.selectedComodo.descricao }" />
+                                    </div>
+                                    <br/>
+                                    <div class="input-group">
+                                        <span style="width: 88px !important" class="input-group-addon">Padrão</span>
+                                        <p:inputText  id="padraoModal"  size="15" 
+                                                      value="#{comodoMB.selectedComodo.padrao }" />
+                                    </div>
+                                    <br/>
+                                    <div class="input-group">
+                                        <span style="width: 88px !important" class="input-group-addon">Tamanho</span>
+                                        <p:inputText  id="tamModal"  size="15" 
+                                                      value="#{comodoMB.selectedComodo.tamMedio }" />
+                                    </div>
+                                    <br/>
+                                    <div class="input-group-btn">
+                                        <p:commandButton onclick="comDialog.hide()"  actionListener="#{comodoMB.alterComodo}"   update=":form:comodos" styleClass="btn btn-primary" value="Alterar"  />
+                                    </div>
+                                    <div class="input-group-btn">
+                                        <p:commandButton onclick="comDialog.hide()" styleClass="btn btn-primary" value="Cancelar"  />
+                                    </div>
+                                </p:panel>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </p:dialog>   
+        </h:form>
+    </ui:define>
+
+
+
+
+</ui:composition>
+

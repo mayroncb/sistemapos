@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
@@ -8,7 +8,8 @@
 
     <ui:define name="contentjsf">  
         <h:form id="form" >
-            <div class="row">                        <div class="col-lg-3 col-xs-6">
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
                     <!-- small box -->
                     <div class="small-box bg-green">
                         <div class="inner">
@@ -16,7 +17,7 @@
                                 <h:outputText  value="#{listarProjetosMB.qtdProjetos}"/>
                             </h3>
                             <p>
-                                Novos Projeto
+                                Novos Projetos
                             </p>
                         </div>
                         <div class="icon">
@@ -35,7 +36,7 @@
                                 3
                             </h3>
                             <p>
-                                Projeto em Andamento
+                                Projetos em Andamento
                             </p>
                         </div>
                         <div class="icon">
@@ -66,65 +67,67 @@
                     </div>
                 </div><!-- ./col -->
             </div>
-            <div class="row">
-                <!-- Left col -->
-                <section class="col-lg-6 connectedSortable"> 
-                    <!-- Box (with bar chart) -->
-                    <div class="box box-danger" id="loading-example">
-                        <div class="box-header">
-                            <!-- tools box -->
+            <section class="content">
+                <div class="row">
+                    <!-- Left col -->
+                    <section class="col-lg-6 connectedSortable ui-sortable"> 
+                        <!-- Box (with bar chart) -->
+                        <div class="box box-danger" id="loading-example">
+                            <div class="box-header" style="cursor: move;">
+                                <!-- tools box -->
 
-                            <i class="fa fa-cloud"></i>
+                                <i class="fa fa-cloud"></i>
 
-                            <h3 class="box-title">Andamento do Projeto 1</h3>
-                        </div><!-- /.box-header -->
-                        <div class="box-body no-padding">
-                            <div class="row">
-                                <div class="col-sm-7">
-                                    <!-- bar chart -->
-                                    <div class="chart" id="bar-chart" style="height: 250px;"></div>
-                                </div>
-                                <div class="col-sm-5">
-                                    <div class="pad">
-                                        <!-- Progress bars -->
-                                        <div class="clearfix">
-                                            <span class="pull-left">Arquitetônico</span>
-                                            <small class="pull-right">30 %</small>
-                                        </div>
-                                        <div class="progress xs">
-                                            <div class="progress-bar progress-bar-green" style="width: 30%;"></div>
-                                        </div>
+                                <h3 class="box-title">Andamento do Projeto 1</h3>
+                            </div><!-- /.box-header -->
+                            <div class="box-body no-padding">
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <!-- bar chart -->
+                                        <div class="chart" id="bar-chart" style="height: 250px;"></div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="pad">
+                                            <!-- Progress bars -->
+                                            <div class="clearfix">
+                                                <span class="pull-left">Arquitetônico</span>
+                                                <small class="pull-right">30 %</small>
+                                            </div>
+                                            <div class="progress xs">
+                                                <div class="progress-bar progress-bar-green" style="width: 30%;"></div>
+                                            </div>
 
-                                        <div class="clearfix">
-                                            <span class="pull-left">Hidraulico</span>
-                                            <small class="pull-right">14%</small>
-                                        </div>
-                                        <div class="progress xs">
-                                            <div class="progress-bar progress-bar-red" style="width: 14%;"></div>
-                                        </div>
+                                            <div class="clearfix">
+                                                <span class="pull-left">Hidraulico</span>
+                                                <small class="pull-right">14%</small>
+                                            </div>
+                                            <div class="progress xs">
+                                                <div class="progress-bar progress-bar-red" style="width: 14%;"></div>
+                                            </div>
 
-                                        <div class="clearfix">
-                                            <span class="pull-left">Eletrico</span>
-                                            <small class="pull-right">50%</small>
-                                        </div>
-                                        <div class="progress xs">
-                                            <div class="progress-bar progress-bar-light-blue" style="width: 50%;"></div>
-                                        </div>
+                                            <div class="clearfix">
+                                                <span class="pull-left">Eletrico</span>
+                                                <small class="pull-right">50%</small>
+                                            </div>
+                                            <div class="progress xs">
+                                                <div class="progress-bar progress-bar-light-blue" style="width: 50%;"></div>
+                                            </div>
 
-                                        <div class="clearfix">
-                                            <span class="pull-left">Orçamento</span>
-                                            <small class="pull-right">20%</small>
-                                        </div>
-                                        <div class="progress xs">
-                                            <div class="progress-bar progress-bar-aqua" style="width: 20%;"></div>
-                                        </div>
-                                    </div><!-- /.pad -->
-                                </div><!-- /.col -->
-                            </div><!-- /.row - inside box -->
-                        </div><!-- /.box-body -->
-                    </div>
-                </section>
-            </div><!-- /.box -->  
+                                            <div class="clearfix">
+                                                <span class="pull-left">Orçamento</span>
+                                                <small class="pull-right">20%</small>
+                                            </div>
+                                            <div class="progress xs">
+                                                <div class="progress-bar progress-bar-aqua" style="width: 20%;"></div>
+                                            </div>
+                                        </div><!-- /.pad -->
+                                    </div><!-- /.col -->
+                                </div><!-- /.row - inside box -->
+                            </div><!-- /.box-body -->
+                        </div>
+                    </section>
+                </div><!-- /.box --> 
+            </section>
         </h:form>
 
     </ui:define>
