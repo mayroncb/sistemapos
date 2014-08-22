@@ -6,7 +6,6 @@
 
 package com.l3construcoes.DAO;
 
-import com.l3construcoes.entidades.Comodo;
 import com.l3construcoes.entidades.Servico;
 import java.io.Serializable;
 import java.util.List;
@@ -18,6 +17,10 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface ServicoDao extends CrudRepository<Servico, Serializable>{
     
+    Servico getServico(String descricao);
+    void addServico(Servico servico);
+    void removeServico(Servico servico);
+    void alterarServico(Servico servico);
     List<Servico> getAllServicos();
     List<Servico> getAllServicosPorTipo(String tipo);
     

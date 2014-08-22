@@ -17,10 +17,12 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface ComodoDao extends CrudRepository<Comodo, Serializable>{
     
+    Comodo getComodo(String descricao);
+    void addComodo(Comodo comodo);
+    void removeComodo(Comodo c);
     void alterarComodo(Comodo c);
     List<Comodo> getAllComodos();
     List<Comodo> getAllComodosByPadrao(String padrao);
-    Comodo getComodo(String descricao);
-    int addComodo(Comodo comodo);
+
     
 }

@@ -6,6 +6,7 @@
 package com.l3construcoes.util;
 
 import com.mongodb.MongoClient;
+import com.mongodb.ServerAddress;
 import java.io.Serializable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,11 +24,12 @@ public class SpringMongoConfig implements Serializable {
 
     public @Bean
     MongoDbFactory mongoDbFactory() throws Exception {
-        UserCredentials user = new UserCredentials("admin", "DimnKxC7qBdV");
+    //    UserCredentials user = new UserCredentials("admin", "DimnKxC7qBdV");
 //        return new SimpleMongoDbFactory(
-//                new MongoClient("mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/"), "sistema", user );
-   return new SimpleMongoDbFactory(
-                new MongoClient(), "l3sistema" );
+//                new MongoClient("mongodb://104.131.222.105:27017"), "sistema" );
+//   return new SimpleMongoDbFactory(
+//                new MongoClient(new ServerAddress("104.131.222.105", 27017)), "l3sistema" );
+        return new SimpleMongoDbFactory(new MongoClient(), "l3sistema");
     }
 
     public @Bean

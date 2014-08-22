@@ -34,5 +34,25 @@ public class ServicoServiceImpl implements ServicoService, Serializable {
         System.err.println(">>>> "+dao.getAllServicosPorTipo(tipo).size());
         return  dao.getAllServicosPorTipo(tipo);
     }
+
+    @Override
+    public Servico getServico(String descricao) {
+        return  dao.getServico(descricao);
+    }
+
+    @Override
+    public void addServico(Servico servico) {
+         dao.addServico(servico);
+    }
+
+    @Override
+    public void removeServico(Servico servico) {
+        dao.removeServico(servico);
+    }
+
+    @Override
+    public void alterarServico(Servico servico) {
+        dao.alterarServico(servico);
+    }
     
 }

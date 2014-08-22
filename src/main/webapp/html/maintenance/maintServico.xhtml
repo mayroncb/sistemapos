@@ -16,30 +16,32 @@
                         <!-- general form elements -->
                         <div class="box box-primary">
                             <div class="box-header">
-                                <h3 class="box-title">Cômodos</h3>
+                                <h3 class="box-title">Servicos</h3>
                             </div><!-- /.box-header -->
                             <!-- form start -->
                             <div class="box-body">
                                 <!-- /.box-body -->
-                                <p:dataTable scrollable="true" id="comodos"  widgetVar="comodos" scrollHeight="250" var="com" value="#{comodoMB.comodos}">
+                                <p:dataTable scrollable="true" id="servicos"  widgetVar="servicos" scrollHeight="250" var="serv" value="#{servicoMB.servicos}">
 
                                     <p:column  headerText="Descricao">
-                                        <h:outputText  value="#{com.descricao}" />
+                                        <h:outputText  value="#{serv.descricao}" />
                                     </p:column>
 
-                                    <p:column  headerText="Tam. Medio">
-                                        <h:outputText  value="#{com.tamMedio}"/>
+                                    <p:column  headerText="Tipo">
+                                        <h:outputText  value="#{serv.tipo}"/>
+                                        
                                     </p:column>
 
-                                    <p:column  headerText="Padrão">
-                                        <h:outputText value="#{com.padrao}" >
+                                    <p:column  headerText="Valor">
+                                        <h:outputText value="#{serv.valor}" >
+                                            <f:convertNumber currencySymbol="R$" type="currency"/>
                                         </h:outputText>
                                     </p:column>
                                     <p:column headerText="Ação" width="10%" >
-                                        <p:commandButton  style="width: 45%"   update=":value:comodoDetail" oncomplete="PF('comodoDialog').show()" icon="ui-icon-search" >
-                                            <f:setPropertyActionListener value="#{com}" target="#{comodoMB.selectedComodo}" />
+                                        <p:commandButton  style="width: 45%"   update=":value:servicoDetail" oncomplete="PF('servicoDialog').show()" icon="ui-icon-search" >
+                                            <f:setPropertyActionListener value="#{serv}" target="#{servicoMB.selectedServico}" />
                                         </p:commandButton>
-                                        <p:commandButton  style="width: 45%"   actionListener="#{comodoMB.removeComodo(com)}" icon="ui-icon-trash" >
+                                        <p:commandButton  style="width: 45%"   actionListener="#{servicoMB.removeServico(serv)}" icon="ui-icon-trash" >
                                              
                                         </p:commandButton>
                                     </p:column>
@@ -51,45 +53,46 @@
                     </div>
                 </div>
             </section>
-            <p:commandButton style="left: 13px" oncomplete="PF('comodoAdd').show()" value="Adicionar Novo"/>
+            <p:commandButton style="left: 13px" oncomplete="PF('servicoAdd').show()" value="Adicionar Novo"/>
         </h:form>
         <h:form id="value">
-            <p:dialog id="comDialog"  header="Alterar Cômodo" width="350px" resizable="false"  widgetVar="comodoDialog" modal="true" > 
+            <p:dialog id="servDialog"  header="Alterar Servico" width="350px" resizable="false"  widgetVar="servicoDialog" modal="true" > 
                 <div class="row">
                     <!-- left column -->
                     <div class="col-lg-12">
                         <!-- general form elements -->
                         <div class="box box-primary">
                             <div  class="box-body">
-                                <p:panel id="comodoDetail">
+                                <p:panel id="servicoDetail">
                                     <div class="input-group">
                                         <span style="width: 88px !important" class="input-group-addon">Descrição</span>
                                         <p:inputText   size="15" 
-                                                     value="#{comodoMB.selectedComodo.descricao }" />
+                                                       value="#{servicoMB.selectedServico.descricao }" />
                                     </div>
                                     <br/>
                                     
                                     <div class="input-group">
-                                        <span style="width: 88px !important" class="input-group-addon">Padrão</span>
-                                        <p:selectOneMenu style="width: 128px"  id="basic" value="#{comodoMB.selectedComodo.padrao}">
-                                            <f:selectItem itemLabel="Basico" itemValue="Basico" />
-                                            <f:selectItem itemLabel="Normal" itemValue="Normal" />
+                                        <span style="width: 88px !important" class="input-group-addon">Tipo</span>
+                                        <p:selectOneMenu style="width: 128px"  id="basic" value="#{servicoMB.selectedServico.tipo}">
+                                            <f:selectItem itemLabel="Projeto" itemValue="Projeto" />
+                                            <f:selectItem itemLabel="Servico" itemValue="Servico" />
+                                            <f:selectItem itemLabel="Outros" itemValue="Outros" />   
                                         </p:selectOneMenu>
                                     </div>
-                                    <h:inputHidden value="#{comodoMB.selectedComodo.id}" />
+                                    <h:inputHidden value="#{servicoMB.selectedServico.id}" />
                                     <br/>
                                     <div class="input-group">
-                                        <span style="width: 88px !important" class="input-group-addon">Tamanho</span>
+                                        <span style="width: 88px !important" class="input-group-addon">Valor</span>
                                         <p:inputText   size="15" 
-                                                      value="#{comodoMB.selectedComodo.tamMedio }" />
+                                                       value="#{servicoMB.selectedServico.valor }" />
                                     </div>
                                     <br/>
                                     <div class="input-group-btn">
-                                        <p:commandButton onclick="comDialog.hide()"  actionListener="#{comodoMB.alterComodo}"   styleClass="btn btn-primary" value="Alterar"  >
+                                        <p:commandButton onclick="servDialog.hide()"  actionListener="#{servicoMB.alterServico}"   styleClass="btn btn-primary" value="Alterar"  >
                                         </p:commandButton>
                                     </div>
                                     <div class="input-group-btn">
-                                        <p:commandButton onclick="comDialog.hide()" styleClass="btn btn-primary" value="Cancelar"  />
+                                        <p:commandButton onclick="servDialog.hide()" styleClass="btn btn-primary" value="Cancelar"  />
                                     </div>
                                 </p:panel>
                             </div>
@@ -99,7 +102,7 @@
 
             </p:dialog> 
             
-            <p:dialog id="addDialog"  header="Detalhes do Cômodo" width="350px" resizable="false"  widgetVar="comodoAdd" modal="true" > 
+            <p:dialog id="addDialog"  header="Detalhes do Serviço" width="350px" resizable="false"  widgetVar="servicoAdd" modal="true" > 
                 <div class="row">
                     <!-- left column -->
                     <div class="col-lg-12">
@@ -110,29 +113,31 @@
                                     <div class="input-group">
                                         <span style="width: 88px !important" class="input-group-addon">Descrição</span>
                                         <p:inputText id="descModal"  size="15" 
-                                                     value="#{comodoMB.comodo.descricao }" />
+                                                     value="#{servicoMB.servico.descricao }" />
                                     </div>
                                     <br/>
                                    <div class="input-group">
-                                        <span style="width: 88px !important" class="input-group-addon">Padrão</span>
-                                        <p:selectOneMenu style="width: 128px"  id="tipo" value="#{comodoMB.comodo.padrao}">
-                                            <f:selectItem itemLabel="Basico" itemValue="Basico" />
-                                            <f:selectItem itemLabel="Normal" itemValue="Normal" />
+                                        <span style="width: 88px !important" class="input-group-addon">Tipo</span>
+                                        <p:selectOneMenu style="width: 128px"  id="tipo" value="#{servicoMB.servico.tipo}">
+                                            <f:selectItem itemLabel="Projeto" itemValue="Projeto" />
+                                            <f:selectItem itemLabel="Servico" itemValue="Servico" />
+                                            <f:selectItem itemLabel="Outros" itemValue="Outros" />
                                         </p:selectOneMenu>
                                     </div>
                                     <br/>
                                     <div class="input-group">
-                                        <span style="width: 88px !important" class="input-group-addon">Tamanho</span>
+                                        <span style="width: 88px !important" class="input-group-addon">Valor</span>
                                         <p:inputText  id="tamModal"  size="15" 
-                                                      value="#{comodoMB.comodo.tamMedio }" />
+                                                      value="#{servicoMB.servico.valor }" />
                                     </div>
                                     <br/>
                                     <div class="input-group-btn">
-                                        <p:commandButton onclick="comodoAdd.hide()"  actionListener="#{comodoMB.addComodo()}"  styleClass="btn btn-primary" value="Salvar"  >
+                                        <p:commandButton onclick="servicoAdd.hide()"  actionListener="#{servicoMB.addServico}"  styleClass="btn btn-primary" value="Salvar"  >
+                                            
                                         </p:commandButton>
                                     </div>
                                     <div class="input-group-btn">
-                                        <p:commandButton onclick="comodoAdd.hide()" styleClass="btn btn-primary" value="Cancelar"  />
+                                        <p:commandButton onclick="servicoAdd.hide()" styleClass="btn btn-primary" value="Cancelar"  />
                                     </div>
                                 </p:panel>
                             </div>

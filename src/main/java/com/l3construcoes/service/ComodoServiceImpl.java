@@ -39,7 +39,14 @@ public class ComodoServiceImpl implements ComodoService, Serializable{
     public void alterarComodo(Comodo c) {
         comodoDao.alterarComodo(c);
     }
-    
-    
-    
+
+    @Override
+    public void removeComodo(Comodo c) {
+        comodoDao.removeComodo(c);
+    }
+
+    @Override
+    public void addComodo(Comodo c) {
+        comodoDao.addComodo(c);
+    }
 }

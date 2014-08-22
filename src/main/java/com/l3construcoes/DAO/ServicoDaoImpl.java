@@ -91,5 +91,34 @@ public class ServicoDaoImpl implements ServicoDao, Serializable{
     public void deleteAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Servico getServico(String descricao) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void addServico(Servico servico) {
+        mongoOperation.save(servico);
+    }
+
+    @Override
+    public void removeServico(Servico servico) {
+        System.err.println(servico.getId() + "<<<<<<<<<");
+        Query qRemove = new Query();
+        qRemove.addCriteria(Criteria.where("id").is(servico.getId()));
+        mongoOperation.remove(qRemove, Servico.class);
+    }
+
+    @Override
+    public void alterarServico(Servico servico) {
+        Query query = new Query();
+	query.addCriteria(Criteria.where("id").is(servico.getId()));
+        Servico upServico = mongoOperation.findOne(query, Servico.class);
+        upServico.setDescricao(servico.getDescricao());
+        upServico.setTipo(servico.getTipo());
+        upServico.setValor(servico.getValor());
+        mongoOperation.save(upServico);
+    }
     
 }

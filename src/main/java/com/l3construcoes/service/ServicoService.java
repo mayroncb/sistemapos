@@ -15,6 +15,10 @@ import java.util.List;
  */
 public interface ServicoService {
     
+    Servico getServico(String descricao);
+    void addServico(Servico servico);
+    void removeServico(Servico servico);
+    void alterarServico(Servico servico);
     List<Servico> getAllServicos();
     List<Servico> getAllServicosPorTipo(String tipo);
     

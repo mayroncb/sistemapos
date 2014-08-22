@@ -15,7 +15,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -42,8 +41,8 @@ public class ComodoDaoImp implements ComodoDao, Serializable{
     }
 
     @Override
-    public int addComodo(Comodo comodo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void addComodo(Comodo comodo) {
+        mongoOperation.save(comodo);
     }
 
     @Override
@@ -111,7 +110,20 @@ public class ComodoDaoImp implements ComodoDao, Serializable{
 
     @Override
     public void alterarComodo(Comodo c) {
-         mongoOperation.save(c);
+        Query query = new Query();
+	query.addCriteria(Criteria.where("id").is(c.getId()));
+        Comodo upComodo = mongoOperation.findOne(query, Comodo.class);
+        upComodo.setDescricao(c.getDescricao());
+        upComodo.setTamMedio(c.getTamMedio());
+        upComodo.setPadrao(c.getPadrao());
+        mongoOperation.save(upComodo);
+    }
+
+    @Override
+    public void removeComodo(Comodo c) {
+        Query qRemove = new Query();
+        qRemove.addCriteria(Criteria.where("id").is(c.getId()));
+        mongoOperation.remove(qRemove, Comodo.class);
     }
     
     

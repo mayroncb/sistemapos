@@ -46,6 +46,7 @@ body > .header {
     right: 0;
     z-index: 1030;
 }
+ 
 /* Define 2 column template */
 .right-side,
 .left-side {
@@ -1008,28 +1009,6 @@ body > .header .logo .icon {
     margin: 0 3px 0 0;
     padding: 0.4em;
     float: left;
-}
-.ui-selectcheckboxmenu .ui-selectcheckboxmenu-label {
-    width: 100% !important;
-    height: 23px !important;
-}
-.ui-selectcheckboxmenu .ui-selectcheckboxmenu-trigger {
-    border-right: none;
-    border-top: none;
-    border-bottom: none;
-    cursor: pointer;
-    width: 25px !important ;
-    height: 100%;
-    position: absolute;
-    right: 0;
-    top: 0;
-    padding: 0 3px;
-}
- 
-
-.ui-selectcheckboxmenu {
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
 }
 .form-control {
     -webkit-border-radius: 0px !important;
@@ -3392,6 +3371,10 @@ fieldset[disabled] .btn-twitter.active {
     background-color: #587ea3;
     border-color: rgba(0, 0, 0, 0.2);
 }
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    top: 60px;
+}
+
 .btn-vk:hover,
 .btn-vk:focus,
 .btn-vk:active,
