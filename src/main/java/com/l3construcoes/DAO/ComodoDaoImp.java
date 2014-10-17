@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.l3construcoes.DAO;
 
 import com.l3construcoes.entidades.Comodo;
 import com.l3construcoes.util.SpringMongoConfig;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -22,14 +24,16 @@ import org.springframework.stereotype.Repository;
  * @author paulolira
  */
 @Repository("comodoDao")
-public class ComodoDaoImp implements ComodoDao, Serializable{
-    
-    ApplicationContext ctx
-                = new AnnotationConfigApplicationContext(SpringMongoConfig.class);
-        MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
+public class ComodoDaoImp implements ComodoDao, Serializable {
 
-        
-        
+ ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-config.xml");
+    MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
+
+
+    public ComodoDaoImp() {
+        super();
+    }
+
     @Override
     public List<Comodo> getAllComodos() {
         return mongoOperation.findAll(Comodo.class);
@@ -100,18 +104,17 @@ public class ComodoDaoImp implements ComodoDao, Serializable{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
     @Override
     public List<Comodo> getAllComodosByPadrao(String padrao) {
-    Query queryByPadrao = new Query();
-    queryByPadrao.addCriteria(Criteria.where("padrao").in(padrao));
+        Query queryByPadrao = new Query();
+        queryByPadrao.addCriteria(Criteria.where("padrao").in(padrao));
         return mongoOperation.find(queryByPadrao, Comodo.class);
     }
 
     @Override
     public void alterarComodo(Comodo c) {
         Query query = new Query();
-	query.addCriteria(Criteria.where("id").is(c.getId()));
+        query.addCriteria(Criteria.where("id").is(c.getId()));
         Comodo upComodo = mongoOperation.findOne(query, Comodo.class);
         upComodo.setDescricao(c.getDescricao());
         upComodo.setTamMedio(c.getTamMedio());
@@ -125,7 +128,15 @@ public class ComodoDaoImp implements ComodoDao, Serializable{
         qRemove.addCriteria(Criteria.where("id").is(c.getId()));
         mongoOperation.remove(qRemove, Comodo.class);
     }
+
+    public MongoOperations getMongoOperation() {
+        return mongoOperation;
+    }
+
+    public void setMongoOperation(MongoOperations mongoOperation) {
+        this.mongoOperation = mongoOperation;
+    }
     
     
-    
+
 }

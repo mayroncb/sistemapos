@@ -16,6 +16,28 @@
     top: 0;
     padding: 0 3px;
 }
+
+.ui-selectonemenu {
+ display: inline-flex !important;   
+}
+
+.ui-selectonemenu-label.ui-inputfield.ui-corner-all {
+    height: 28px;
+}
+
+.ui-wizard-step-titles.ui-helper-reset.ui-helper-clearfix {
+    width: 100% ;
+    border-bottom: 1px solid #DDD;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #DDD;
+    
+}
+
+.ui-wizard  {
+   background: none repeat scroll 0% 0% #FFF;
+   border-top-color: #3C8DBC;
+}
  
 /*Arredondar bordas SelectBox */
 .ui-selectonemenu, .ui-widget, .ui-state-default .ui-corner-all {

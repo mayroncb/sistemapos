@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/html/admin/templateAdmin.xhtml">
+    
+    <ui:define name="contentjsf">  
+        <section class="content-header">
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-dashboard"></i> Clientes</a></li>
+                        <li class="active">Adicionar</li>
+                    </ol>
+        </section>
+        <h:form id="form" >
+          <section>
+                        <div class="row">
+                            <!-- left column -->
+                            <div class="col-md-5">
+                                <!-- general form elements -->
+                                <div class="box box-primary">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Dados do Cliente</h3>
+                                    </div><!-- /.box-header -->
+                                    <div  class="box-body">
+                                        <div class="input-group">
+                                            <span style="width: 70px !important" class="input-group-addon">Nome</span>
+                                            <p:inputText  id="nome"  size="30" 
+                                                          value="#{manterClienteMB.cliente.nome}" />
+                                        </div>
+                                        <br/>
+                                        <div class="input-group">
+                                            <span style="width: 70px !important" class="input-group-addon">
+                                                <i class="fa fa-envelope" />
+                                            </span>
+                                            <p:inputText value="#{manterClienteMB.cliente.email}" size="30"   label="Email"/>
+                                        </div>
+                                        <br/>
+                                        <div class="input-group">
+                                            <span style="width: 70px !important" class="input-group-addon">CPF</span>
+                                            <p:inputMask requiredMessage="Campo * Nome Obrigatório" required="true" placeholder="___.___.___-__" mask="999.999.999-99" value="#{manterClienteMB.cliente.cpf}" size="11"  label="CPF" />
+                                        </div>
+                                        <br/>
+                                        <div class="input-group">
+                                            <span style="width: 70px !important" class="input-group-addon">Nasc</span>
+                                            <p:calendar placeholder="__/__/____" size="11" navigator="true" pattern="dd/MM/yyyy" locale="br"  value="#{manterClienteMB.cliente.dataNascimento}"  />
+                                        </div>
+                                        <br/>
+                                        <div class="input-group">
+                                            <span style="width: 70px !important" class="input-group-addon">
+                                                <i class="fa fa-phone-square"/>
+                                            </span>
+                                            <p:inputMask placeholder="(__)____-____" mask="(99)9999-9999" size="11" value="#{manterClienteMB.cliente.telefone}" label="Telefone"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-7">
+                                <div class="box box-primary">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Endereço</h3>
+                                    </div><!-- /.box-header -->
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <div class="input-group">
+                                                    <span style="width: 70px !important" class="input-group-addon">Rua</span>
+                                                    <p:inputText id="clienteRua" value="#{manterClienteMB.cliente.endereco.rua}"  size="30" label="rua" />
+                                                    <br/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <span style="width: 70px !important" class="input-group-addon">Nº</span>
+                                                    <p:inputText id="clienteNumero" size="5" value="#{manterClienteMB.cliente.endereco.numero}" label="Numero" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="input-group">
+                                            <span style="width: 70px !important" class="input-group-addon">Bairro</span>
+                                            <p:inputText id="clienteBairro" value="#{manterClienteMB.cliente.endereco.bairro}" size="30" label="rua" />
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <div class="input-group">
+                                                    <span style="width: 70px !important" class="input-group-addon">Cidade</span>
+                                                    <p:inputText id="clienteCidade" value="#{manterClienteMB.cliente.endereco.cidade}" size="30" label="Cidade" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <span style="width: 70px !important" class="input-group-addon">UF</span>
+                                                    <p:inputText id="clienteEstado" value="#{manterClienteMB.cliente.endereco.estado}" size="5"  label="Estado" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="input-group">
+                                            <span style="width: 70px !important" class="input-group-addon">CEP</span>
+                                            <p:inputMask id="clienteCep" mask="99.999-999" placeholder="__.___-___" size="8" value="#{manterClienteMB.cliente.endereco.cep}" label="Cep" />
+                                        </div>
+                                    </div>
+                                    <!-- Fim Drag Drop Comodos -->
+                                </div>
+                            </div>
+                        </div>
+              
+              <div class="row">
+                  <div class="col-xs-12">
+                      <div class="box box-primary">
+                          <div class="box-header">
+                              
+                          </div><!-- /.box-header -->
+                          <div  class="box-body">
+                              
+                              <h:commandButton class="btn btn-primary center-block" style="width: 30%" action="#{manterClienteMB.saveCliente()}" value="Salvar"/>
+                              
+                              
+                          </div>
+                          
+                         
+                      </div>
+                  </div>
+              </div>
+                    </section>
+            
+            
+            
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
+

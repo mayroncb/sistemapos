@@ -7,7 +7,6 @@
 package com.l3construcoes.DAO;
 
 import com.l3construcoes.entidades.Cliente;
-import com.l3construcoes.entidades.Projeto;
 import java.io.Serializable;
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
@@ -16,13 +15,13 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author paulolira
  */
-public interface ProjetoDao extends CrudRepository<Projeto, Serializable>{
+public interface ClienteDao extends CrudRepository<Cliente, Serializable>{
     
-    Projeto findById(String id);
-    void salvar(Projeto projeto);
-    void remover(Projeto projeto);
-    void alterar(Projeto projeto);
-    List<Projeto> getAllProjects();
-    List<Projeto> getProjetosPorCliente(Cliente c);
+    @Override
+    List<Cliente> findAll();
+    
+    Cliente findById(String id);
+    
+    void editar(Cliente c);
     
 }

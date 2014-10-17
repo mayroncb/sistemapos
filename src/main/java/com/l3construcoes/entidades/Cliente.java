@@ -7,14 +7,23 @@
 package com.l3construcoes.entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 /**
  *
  * @author paulolira
  */
+@CompoundIndexes({
+    @CompoundIndex(name = "_cpf", def = "{ 'cpf': 1 }", unique = true)
+})
 public class Cliente implements Serializable{
     
     @Id
@@ -26,6 +35,7 @@ public class Cliente implements Serializable{
     
     private Endereco endereco = new Endereco();
     
+    @Indexed
     private String cpf;
     
     private Date dataCadastro;
@@ -33,9 +43,12 @@ public class Cliente implements Serializable{
     private Date dataNascimento;
     
     private String telefone;
+    
+    @DBRef
+    private List<Projeto> projetos;
 
     public Cliente() {
-        
+        projetos = new ArrayList<Projeto>();
     }
     
     
@@ -104,12 +117,24 @@ public class Cliente implements Serializable{
         this.id = id;
     }
 
+    public List<Projeto> getProjetos() {
+        return projetos;
+    }
+
+    public void setProjetos(List<Projeto> projetos) {
+        this.projetos = projetos;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 97 * hash + Objects.hashCode(this.id);
         hash = 97 * hash + Objects.hashCode(this.cpf);
         return hash;
+    }
+    
+    public void addProjeto(Projeto p){
+       getProjetos().add(p);
     }
 
     @Override
@@ -128,6 +153,11 @@ public class Cliente implements Serializable{
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return nome;
     }
 
     

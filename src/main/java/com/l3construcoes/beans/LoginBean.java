@@ -43,7 +43,6 @@ public class LoginBean implements Serializable{
         System.out.println(user.getUserName() + user.getPasswd() + "<<<<<<<");
         if(user.getUserName().equals("paulo")
                 && "1234".equals(user.getPasswd())  ){
-            System.out.println("IFFFF");
             loggedIn = true;
             navigationBean.toHome();
         } else {

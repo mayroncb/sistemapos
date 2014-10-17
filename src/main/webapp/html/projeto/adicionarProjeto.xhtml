@@ -19,7 +19,7 @@
                     <section>
                         <div class="row">
                             <!-- left column -->
-                            <div class="col-md-5">
+                            <div class="form-box  ">
                                 <!-- general form elements -->
                                 <div class="box box-primary">
                                     <div class="box-header">
@@ -33,7 +33,7 @@
                                                 <div class="input-group-btn">
                                                     <p:commandLink styleClass="btn btn-primary" value="Selecionar" />
                                                 </div>
-                                                <p:selectOneMenu required="true" requiredMessage="Selecione um cliente"  style="width: 100%" converter="objectConverter" id="selectClients" value="#{cadastroMB.selectedCliente}"  label="Selecione Aqui"
+                                                <p:selectOneMenu required="true" requiredMessage="Selecione um cliente"  style="width: 100%" converter="objectConverter" id="selectClients" value="#{cadastroMB.cliente}"  label="Selecione Aqui"
                                                                       filter="true" filterMatchMode="contains" >
                                                     <p:ajax process="cliente"/>
                                                     <f:selectItem itemLabel="Selecione aqui" itemValue="" noSelectionOption="true" />
@@ -163,9 +163,10 @@
                                                     <span class="input-group-addon">
                                                         Frente:
                                                     </span>
-                                                    <p:spinner size="2" id="spinnerFrente"   value="#{cadastroMB.projeto.terreno.frente}"  min="1" >
+                                                    <p:inputText size="4" id="spinnerFrente"    value="#{cadastroMB.projeto.terreno.frente}"    >
+                                                        <f:convertNumber minFractionDigits="2" />
                                                         <p:ajax update="spinnerLateral, spinnerFrente, resulField" process="@this" />
-                                                    </p:spinner>
+                                                    </p:inputText>
                                                 </div>
                                                 <br/>
                                             </div>
@@ -175,9 +176,10 @@
                                                     <span class="input-group-addon">
                                                         Lateral:
                                                     </span>
-                                                    <p:spinner size="2" id="spinnerLateral"   value="#{cadastroMB.projeto.terreno.lateral}"  min="1" >
+                                                    <p:inputText size="4" id="spinnerLateral"   value="#{cadastroMB.projeto.terreno.lateral}"    >
+                                                        <f:convertNumber minFractionDigits="2" />
                                                         <p:ajax update="spinnerLateral, spinnerFrente, resulField" process="@this" />
-                                                    </p:spinner>    
+                                                    </p:inputText>    
                                                 </div>
                                             </div>
                                         </div>
@@ -188,7 +190,10 @@
                                                     <span class="input-group-addon">
                                                         Total:
                                                     </span>
-                                                    <h:inputText class="form-control" style="text-align: right" value="#{cadastroMB.calcM2}" id="resulField" disabled="true" size="2" />
+                                                    <h:inputText class="form-control" style="text-align: right" value="#{cadastroMB.calcM2}" 
+                                                                 id="resulField" disabled="true" size="2" > 
+                                                    <f:convertNumber minFractionDigits="2" />
+                                                    </h:inputText>
                                                     <span class="input-group-addon">m<sup style="font-size: 12px">2</sup></span>
                                                 </div>
                                             </div>
@@ -263,7 +268,7 @@
                         </div>
                     </section>
                 </p:tab>
-                <p:tab   title="Serviços" >
+                <p:tab  id="servicos" title="Serviços" >
                     <section  class="content">
                         <!--Inicio Projetos -->
                         <div class="row">
@@ -370,7 +375,7 @@
                                 Contratada:
                                 <address>
                                     <strong>L3 Arquitetura e Engenharia</strong><br/>
-                                    Rua João Pessoa, Centro, 16 <br/>
+                                    Rua João Pessoa, Centro, 90 <br/>
                                     Santa Luzia, PB <br/>
                                     Phone: (804) 123-5432<br/>
                                     Email: contato@l3construcoes.com
@@ -433,10 +438,10 @@
                                     <table class="table">
                                         <tr>
                                             <th style="width:50%">Serviços</th>
-                                            <td>20</td>
+                                            <td>R$ #{cadastroMB.somarServicoes()}</td>
                                         </tr>
                                         <tr>
-                                            <th>Total em m<sup style="font-size: 5px">2</sup></th>
+                                            <th>Total em m<sup style="font-size: 10px">2</sup></th>
                                             <td>#{cadastroMB.projeto.tamanhoTotal}</td>
                                         </tr>
                                         <tr>

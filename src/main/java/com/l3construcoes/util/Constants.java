@@ -12,4 +12,11 @@ package com.l3construcoes.util;
  */
 public class Constants {
     
+    public final static String LINK_ADICIONAR_CLIENTE = "/html/admin/adicionarCliente.xhtml";
+    public final static String LINK_DASHBOARD = "/html/admin/dashboard.xhtml";
+    public final static String LINK_EDITAR_CLIENTE = "/html/cliente/editarCliente.xhtml";
+    public final static String LINK_LISTAR_CLIENTES = "/html/cliente/listarClientes.xhtml";
+    public final static String LINK_EDITAR_PROJETO = "/html/projeto/editarprojetos.xhtml";
+    public final static String LINK_LISTAR_PROJETOS = "/html/projeto/listarProjetos.xhtml";
+    
 }

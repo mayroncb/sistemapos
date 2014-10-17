@@ -10,6 +10,8 @@ import com.l3construcoes.entidades.Comodo;
 import com.l3construcoes.entidades.Endereco;
 import com.l3construcoes.entidades.Projeto;
 import com.l3construcoes.entidades.Servico;
+import com.l3construcoes.service.ClienteService;
+import com.l3construcoes.service.ClienteServiceImpl;
 import com.l3construcoes.service.ComodoService;
 import com.l3construcoes.service.ComodoServiceImpl;
 import com.l3construcoes.service.ProjetoService;
@@ -17,15 +19,18 @@ import com.l3construcoes.service.ProjetoServiceImpl;
 import com.l3construcoes.service.ServicoService;
 import com.l3construcoes.service.ServicoServiceImpl;
 import com.l3construcoes.util.CalcUtils;
-import com.l3construcoes.util.Navigation;
+import com.l3construcoes.util.Constants;
+import com.l3construcoes.util.SistemaUtil;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
@@ -36,13 +41,19 @@ import org.springframework.stereotype.Component;
  * @author paulolira
  */
 @ManagedBean(name = "cadastroMB")
-@SessionScoped
+@ViewScoped
 @Component
-public class CadastroMB {
+public class CadastroMB implements Serializable{
 
     private boolean skip;
-
+    
+    private List<Cliente> clientes;
+    
+    private Cliente selectedCliente;
+    
     private Cliente cliente;
+    
+    private ClienteService clienteService;
 
     private Endereco enderecoObra;
 
@@ -75,27 +86,51 @@ public class CadastroMB {
     private ProjetoService projetoService;
     
     private Comodo comodoEmSelecionados;
+    
+    private Projeto projetoSelected;
 
     @PostConstruct
     private void init() {
+        selectedCliente = new Cliente();
         servicoService = new ServicoServiceImpl();
         comodoService = new ComodoServiceImpl();
         projetoService = new ProjetoServiceImpl();
+        clienteService = new ClienteServiceImpl();
         comodosSelecionados = new ArrayList<Comodo>();
         selectedServicosProjetos = new ArrayList<Servico>();
         selectedServicosServicos = new ArrayList<Servico>();
         selectedServicosOutros = new ArrayList<Servico>();
         comodos = new ArrayList<Comodo>();
         projeto = new Projeto();
-
         servicosProjetos = servicoService.getAllServicosPorTipo("Projeto");
         servicosOutros = servicoService.getAllServicosPorTipo("Outros");
         servicosServicos = servicoService.getAllServicosPorTipo("Servico");
-
+        clientes = clienteService.findAll();
         projeto.setTipo("Basico");
+        this.cliente = new Cliente();
+        if (FacesContext.getCurrentInstance().getExternalContext().
+                getSessionMap().containsKey("editProjectId")) {
+            String id = (String) FacesContext.getCurrentInstance().getExternalContext().
+                    getSessionMap().get("editProjectId");
+            projeto = projetoService.findById(id);
+            cliente = clienteService.findById(projeto.getIdCliente());
+            FacesContext.getCurrentInstance().getExternalContext().
+                    getSessionMap().remove("editProjectId");
+            for (Servico serv: projeto.getServicos()) {
+                if (serv.getTipo().equalsIgnoreCase("Outros")) {
+                    selectedServicosOutros.add(serv);
+                } 
+                if (serv.getTipo().equalsIgnoreCase("Projeto")) {
+                   selectedServicosProjetos.add(serv);
+                } 
+                if (serv.getTipo().equalsIgnoreCase("Servico")) {
+                    selectedServicosServicos.add(serv);
+                }
+            }
+            comodosSelecionados = projeto.getComodos();
+        } 
         filterComodosList();
 
-        this.cliente = new Cliente();
 
     }
 
@@ -129,18 +164,28 @@ public class CadastroMB {
             custo = CalcUtils.calcValueOfTheProject(valuesServices, tamanhoTotal);
         }
         projeto.setCusto(custo);
-        projeto.setCliente(cliente);
+        projeto.setIdCliente(cliente.getId());
+    }
+    
+    public double somarServicoes(){
+        double result = 0;
+        double outrosCalc = selectedServicosOutros.stream().mapToDouble(s -> s.getValor().doubleValue()).sum();
+        double projetosCalc = selectedServicosProjetos.stream().mapToDouble(s -> s.getValor().doubleValue()).sum();
+        double servicosCal = selectedServicosServicos.stream().mapToDouble(s -> s.getValor().doubleValue()).sum();   
+        result = outrosCalc + projetosCalc + servicosCal;
+        return result;
     }
 
-    public void salvar() {
+    public String salvar() {
+        projeto.setDataCadastro(new Date(System.currentTimeMillis()));
+        projeto.setEstatus(Projeto.EstatusProjeto.NOVO);
         projetoService.salvar(projeto);
         addNotificacao("Adicionado com Sucesso!!!", "Sucesso");
-        RequestContext.getCurrentInstance().closeDialog("confirmModal");
-
+        return Constants.LINK_DASHBOARD;
     }
 
-    public int getCalcM2() {
-        int result = 0;
+    public double getCalcM2() {
+        double result = 0;
         result = (projeto.getTerreno().getLateral() * projeto.getTerreno().getFrente());
         projeto.getTerreno().setTotal(result);
         return result;
@@ -174,6 +219,16 @@ public class CadastroMB {
             RequestContext.getCurrentInstance().update("form:comodosSelecionados");
             addNotificacao(c.getDescricao(), "Removido: ");
         }
+    }
+    
+    public String irListarProjetos(){
+        return Constants.LINK_LISTAR_PROJETOS;
+    }
+    
+    public String  alterarProjeto(){
+        projetoService.alterar(projeto);
+        SistemaUtil.addNotificacao(FacesMessage.SEVERITY_INFO , "Alterado com Sucesso", "Projeto");
+        return  Constants.LINK_LISTAR_PROJETOS;
     }
 
     public Cliente getCliente() {
@@ -241,19 +296,12 @@ public class CadastroMB {
     }
 
     public String onFlowProcess(FlowEvent event) {
-        System.err.print(event.getOldStep().toString());
-        if (skip) {
-            skip = false;
-            return "confirm";
-        } else {
-
-            if (event.getNewStep().toString().contains("servicos")) {
-                addNotificacao(String.valueOf(getCalcM2()), "Tamanho do terreno: ");
-            } else if (event.getOldStep().toString().contains("servicos")) {
-                viewConfirmationProject();
-            }
-            return event.getNewStep();
-        }
+        System.out.println(event.getOldStep());
+        
+        if (event.getOldStep().equals("servicos")) {
+            viewConfirmationProject();
+        }    
+        return event.getNewStep();
     }
 
     public List<Servico> getServicosProjetos() {
@@ -311,7 +359,31 @@ public class CadastroMB {
     public void setComodoEmSelecionados(Comodo comodoEmSelecionados) {
         this.comodoEmSelecionados = comodoEmSelecionados;
     }
-    
-    
 
+    public List<Cliente> getClientes() {
+        return clienteService.findAll();
+    }
+
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
+    }
+
+    public Cliente getSelectedCliente() {
+        return selectedCliente;
+    }
+
+    public void setSelectedCliente(Cliente selectedCliente) {
+        this.selectedCliente = selectedCliente;
+    }
+
+    public Projeto getProjetoSelected() {
+        return projetoSelected;
+    }
+
+    public void setProjetoSelected(Projeto projetoSelected) {
+        this.projetoSelected = projetoSelected;
+    }
+
+    
+    
 }

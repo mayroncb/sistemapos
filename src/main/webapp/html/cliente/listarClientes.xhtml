@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/html/admin/templateAdmin.xhtml">
+
+   <ui:define name="contentjsf">  
+        <h:form id="form" >
+
+            <section class="content">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-12">
+                        <!-- general form elements -->
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <h3 class="box-title">Clientes</h3>
+                            </div><!-- /.box-header -->
+                            <!-- form start -->
+                            <div class="box-body">
+                                <!-- /.box-body -->
+                                <p:dataTable scrollable="true" id="clientes_tbl"  widgetVar="clientes" scrollHeight="250" var="cliente" value="#{manterClienteMB.clientes}">
+
+                                    <p:column  headerText="Nome">
+                                        <h:outputText  value="#{cliente.nome}" />
+                                    </p:column>
+
+                                    <p:column  headerText="Email">
+                                        <h:outputText  value="#{cliente.email}"/>
+                                    </p:column>
+
+                                    <p:column  headerText="Telefone">
+                                        <h:outputText value="#{cliente.telefone}" >
+                                        </h:outputText>
+                                    </p:column>
+                       
+                                    <p:column headerText="Ação" width="10%" >
+                                        <p:commandButton  style="width: 45%"     actionListener="#{manterClienteMB.irEditarCliente(cliente)}" icon="ui-icon-search" >
+                                            <f:setPropertyActionListener target="#{manterClienteMB.selectedCliente}" value="#{cliente}" />
+                                        </p:commandButton>
+                                       
+                                        <p:commandButton  style="width: 45%"  actionListener="#{manterClienteMB.deleteCliente(cliente)}"   icon="ui-icon-trash" >
+                                            <f:setPropertyActionListener target="#{manterClienteMB.selectedCliente}" value="#{cliente}" />
+                                            <p:confirm header="Deseja apagar esse cliente ?" message="Todos os projetos relacinados a esse cliente serão apagados!" icon="ui-icon-alert" />
+                                        </p:commandButton> 
+                                    </p:column>
+                                </p:dataTable>
+                                
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                             <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                             <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                </p:confirmDialog>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </section>
+           
+            <p:commandButton style="left: 13px"  action="/html/cliente/adicionarCliente.xhtml" value="Adicionar Novo"/>
+        </h:form>
+       
+       
+         
+    </ui:define>
+
+</ui:composition>
+

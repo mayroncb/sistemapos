@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LoginFilter implements Filter{
 
+   @Override
    public void doFilter(ServletRequest request, ServletResponse response,
        FilterChain chain  ) throws IOException, ServletException{
        
@@ -31,8 +32,9 @@ public class LoginFilter implements Filter{
            String contextPath = ((HttpServletRequest)request).getContextPath();
            ((HttpServletResponse)response).sendRedirect(contextPath + "/login/login.xhtml"); 
        }
-       chain.doFilter(request, response);
-       
+       if (chain != null && request != null && response != null ){
+           chain.doFilter(request, response);
+       }
        
    }
 

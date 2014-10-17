@@ -6,14 +6,27 @@
 
 package com.l3construcoes.beans;
 
+import com.l3construcoes.entidades.Cliente;
 import com.l3construcoes.entidades.Projeto;
+import com.l3construcoes.service.ClienteService;
+import com.l3construcoes.service.ClienteServiceImpl;
 import com.l3construcoes.service.ProjetoService;
 import com.l3construcoes.service.ProjetoServiceImpl;
+import com.l3construcoes.util.Constants;
+import com.l3construcoes.util.SistemaUtil;
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import org.springframework.stereotype.Component;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import lombok.Data;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -23,26 +36,62 @@ import org.springframework.stereotype.Component;
  *
  * @author paulolira
  */
+@Data
 @ManagedBean(name = "listarProjetosMB")
-@SessionScoped
-@Component
-public class ListarProjetosMB {
+@ViewScoped
+public class ListarProjetosMB implements Serializable {
     
-    private ProjetoService service; 
+    private ProjetoService service;
+    
+    private ClienteService clienteService;
     
     private String qtdProjetos;
     
+    private List<Projeto> listaProjetosPorCliente;
+    
+    private List<Projeto> projetos;
+    
+    private Cliente cliente;
+    
+    private List<Cliente> clientes;
+    
+    private Projeto projetoSelected;
+    
+    
+    
     @PostConstruct
     public void init(){
-       service = new ProjetoServiceImpl();
+        clienteService = new ClienteServiceImpl();
+        service = new ProjetoServiceImpl();
+        clientes = clienteService.findAll();
+        cliente = new Cliente();
+        projetos = service.getProjects();
     }
     
-    public List<Projeto> getAllProjects(){
-        return service.getProjects();
+    public String irEditarProjeto(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.getSessionMap().put("editProjectId", projetoSelected.getId());
+        return Constants.LINK_EDITAR_PROJETO;
     }
-
-    public String getQtdProjetos() {
-        qtdProjetos = String.valueOf(getAllProjects().size());
-        return qtdProjetos;
-    }    
+    
+    public void projetosPorCliente(){
+        listaProjetosPorCliente = service.getProjetosPorCliente(cliente); 
+        RequestContext.getCurrentInstance().update("form:table_projetos");
+    }
+    
+    public void removerProjeto(){
+        service.remover(projetoSelected);
+        listaProjetosPorCliente = service.getProjetosPorCliente(cliente); 
+        SistemaUtil.addNotificacao( FacesMessage.SEVERITY_INFO , "Removido com sucesso", "Projeto");
+        RequestContext.getCurrentInstance().update("form:table_projetos");
+        
+    }
+    
+    public List<Projeto.EstatusProjeto> estatusProjeto(){
+        List<Projeto.EstatusProjeto> estatus = new ArrayList<>();
+        estatus.addAll(Arrays.asList(Projeto.EstatusProjeto.values()));
+        return estatus;
+    }
+    
+ 
 }

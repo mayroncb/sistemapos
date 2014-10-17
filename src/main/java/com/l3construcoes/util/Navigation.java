@@ -5,6 +5,7 @@ public enum Navigation {
     
     LOGIN_PAGE("/html/Login/login.xhtml"),
     ADMIN_PAGE("/html/Admin/dashboard.xhtml");
+     
 
     private String navigation;
 

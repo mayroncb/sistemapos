@@ -7,7 +7,6 @@
 package com.l3construcoes.beans;
 
 import com.l3construcoes.entidades.Comodo;
-import com.l3construcoes.enums.TipoProjetoEnum;
 import com.l3construcoes.service.ComodoService;
 import com.l3construcoes.service.ComodoServiceImpl;
 import java.util.List;

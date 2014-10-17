@@ -41,7 +41,7 @@ public class NavigationBean implements Serializable {
      * @return home page name.
      */
     public String redirectToHome() {
-        return "/dashboard.xhtml?faces-redirect=true";
+        return "/dashboard.xhtml";
     }
 
      /**

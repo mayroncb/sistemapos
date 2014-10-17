@@ -7,6 +7,7 @@
 package com.l3construcoes.entidades;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -20,11 +21,11 @@ public class Terreno implements Serializable{
     @Id
     private String id;
     
-    private int lateral = 1;
+    private double lateral ;
     
-    private int frente = 1;
+    private double frente;
     
-    private int total;
+    private double total;
 
     public String getId() {
         return id;
@@ -34,32 +35,31 @@ public class Terreno implements Serializable{
         this.id = id;
     }
 
-    public int getLateral() {
+    public double getLateral() {
         return lateral;
     }
 
-    public void setLateral(int lateral) {
-        this.lateral = lateral;
+    public void setLateral(double lateral) {
+         
+        this.lateral =  lateral;
     }
 
-    public int getFrente() {
+    public double getFrente() {
         return frente;
     }
 
-    public void setFrente(int frente) {
+    public void setFrente(double frente) {
+        
         this.frente = frente;
     }
 
-    public int getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(double total) {
+         
         this.total = total;
     }
-    
-    
-    
-    
     
 }

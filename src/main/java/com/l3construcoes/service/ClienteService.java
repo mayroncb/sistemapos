@@ -7,21 +7,18 @@
 package com.l3construcoes.service;
 
 import com.l3construcoes.entidades.Cliente;
-import com.l3construcoes.entidades.Projeto;
 import java.util.List;
 
 /**
  *
  * @author paulolira
  */
-public interface ProjetoService {
+public interface ClienteService {
     
-    void salvar(Projeto projeto);
-    void alterar(Projeto projeto);
-    void remover(Projeto projeto);
-    Projeto findById(String id);
-    List<Projeto> getProjects();
-    List<Projeto> getProjetosPorCliente(Cliente c);
-    
+    void save(Cliente c);
+    void remove(Cliente c);
+    List<Cliente> findAll();
+    void editar(Cliente c);
+    Cliente findById(String id);
     
 }

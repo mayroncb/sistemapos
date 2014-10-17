@@ -6,7 +6,13 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/html/admin/templateAdmin.xhtml">
 
-    <ui:define name="contentjsf">  
+    <ui:define name="contentjsf">
+        <section class="content-header">
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Dashboard</li>
+            </ol>
+        </section>
         <h:form id="form" >
             <div class="row">
                 <div class="col-lg-3 col-xs-6">
@@ -14,7 +20,7 @@
                     <div class="small-box bg-green">
                         <div class="inner">
                             <h3>
-                                <h:outputText  value="#{listarProjetosMB.qtdProjetos}"/>
+                                <h:outputText value="#{listarProjetosMB.projetos.size()}"/>
                             </h3>
                             <p>
                                 Novos Projetos
@@ -78,49 +84,28 @@
 
                                 <i class="fa fa-cloud"></i>
 
-                                <h3 class="box-title">Andamento do Projeto 1</h3>
+                                <h3 class="box-title">Projetos</h3>
                             </div><!-- /.box-header -->
-                            <div class="box-body no-padding">
+                            <div class="box-body ">
                                 <div class="row">
-                                    <div class="col-sm-7">
-                                        <!-- bar chart -->
-                                        <div class="chart" id="bar-chart" style="height: 250px;"></div>
-                                    </div>
-                                    <div class="col-sm-5">
-                                        <div class="pad">
-                                            <!-- Progress bars -->
-                                            <div class="clearfix">
-                                                <span class="pull-left">Arquitetônico</span>
-                                                <small class="pull-right">30 %</small>
-                                            </div>
-                                            <div class="progress xs">
-                                                <div class="progress-bar progress-bar-green" style="width: 30%;"></div>
-                                            </div>
 
-                                            <div class="clearfix">
-                                                <span class="pull-left">Hidraulico</span>
-                                                <small class="pull-right">14%</small>
-                                            </div>
-                                            <div class="progress xs">
-                                                <div class="progress-bar progress-bar-red" style="width: 14%;"></div>
-                                            </div>
-
-                                            <div class="clearfix">
-                                                <span class="pull-left">Eletrico</span>
-                                                <small class="pull-right">50%</small>
-                                            </div>
-                                            <div class="progress xs">
-                                                <div class="progress-bar progress-bar-light-blue" style="width: 50%;"></div>
-                                            </div>
-
-                                            <div class="clearfix">
-                                                <span class="pull-left">Orçamento</span>
-                                                <small class="pull-right">20%</small>
-                                            </div>
-                                            <div class="progress xs">
-                                                <div class="progress-bar progress-bar-aqua" style="width: 20%;"></div>
-                                            </div>
-                                        </div><!-- /.pad -->
+                                    <div class="col-lg-12 " >
+                                        <p:dataTable value="#{listarProjetosMB.projetos}" var="projeto"> 
+                                            <p:column headerText="Data" >
+                                                <h:outputText  value="#{projeto.dataCadastro}" > 
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                </h:outputText>
+                                            </p:column>
+                                            <p:column headerText="Valor" >
+                                                <h:outputText value="R$ #{projeto.custo} " />
+                                            </p:column>
+                                            <p:column headerText="Tamanho" >
+                                                <h:outputText value="#{projeto.tamanhoTotal} m2" />
+                                            </p:column>        
+                                            <p:column style="text-align: center "     headerText="Situação" >
+                                                <h:outputText class="bg-green"   style="font-weight: bold; font-size: 10px" value="#{projeto.estatus}" />
+                                            </p:column>
+                                        </p:dataTable>
                                     </div><!-- /.col -->
                                 </div><!-- /.row - inside box -->
                             </div><!-- /.box-body -->
